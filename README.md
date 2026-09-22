@@ -8,7 +8,7 @@ An interactive presentation and shared prototype gallery for The Octalysis Group
 
 ## Present
 
-Scroll or use the left/right arrow keys. Press N to toggle presenter notes. The presentation follows a fitness project through Strategy Dashboard → Brainstorming → Battle Plan (Feature List and Game Loop) → Battle Plan (Balancing and Logic) → Wireframes. Shared project data connects the dashboard, loop, economy model, and floating phone. It includes a downloadable single-file fitness starter, a practice timer, and a simulated repository contribution flow. See [PRESENTATION.md](PRESENTATION.md) for the walkthrough and timing. Presenter notes appear on the same screen, so leave them hidden while screen-sharing unless you want the audience to see them.
+Scroll or use the left/right arrow keys. Press N to toggle presenter notes. The presentation follows a fitness project through Strategy Dashboard → Brainstorming → P/E Feature list and game loop → Battle Plan (Balancing and Logic) → Wireframes. Shared project data connects the dashboard, loop, economy model, and floating phone. It includes a downloadable single-file fitness starter, a practice timer, and a simulated repository contribution flow. See [PRESENTATION.md](PRESENTATION.md) for the walkthrough and timing. Presenter notes appear on the same screen, so leave them hidden while screen-sharing unless you want the audience to see them.
 
 ## The shared workflow
 

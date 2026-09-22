@@ -3,7 +3,7 @@ const $=id=>document.getElementById(id),money=v=>new Intl.NumberFormat('en-US',{
 let original,project,needsReview=false;
 const setAll=(selector,text)=>document.querySelectorAll(selector).forEach(el=>el.textContent=text);
 function actionText(){return 'Log a Run or Walk of '+project.action.minimumMinutes+'+ minutes';}
-function preview(){if(!project)return;const type=document.body.dataset.artifact||'wireframe',e=economySummary(project.economy),label=['Strategy Dashboard','Brainstorming','Battle Plan · Features & Loop','Battle Plan · Logic','Wireframes'];let content='';
+function preview(){if(!project)return;const type=document.body.dataset.artifact||'wireframe',e=economySummary(project.economy),label=['Strategy Dashboard','Brainstorming','P/E Feature list and game loop','Battle Plan · Logic','Wireframes'];let content='';
  const stages=label.map((l,i)=>'<div class="project-step"><span>0'+(i+1)+'</span>'+l+'</div>').join('');
  if(type==='repository')content='<p class="artifact-kicker">MOVE / CONNECTED FITNESS PROJECT</p><h3>Design the system.<br>Then the screen.</h3>'+stages+'<div class="source-chip">JSON decisions + Markdown context + HTML views</div>';
  if(type==='strategy')content='<p class="artifact-kicker">01 / STRATEGY DASHBOARD</p><h3>Make a small start.<br>Build a habit.</h3><div class="metric-big">30<span>→</span>40<small>%</small></div><p>Week-4 active-member rate</p><div class="preview-block"><b>Player</b><p>Busy returner · manageable starting point</p></div><div class="preview-block"><b>Desired action · A1</b><p>'+escape(actionText())+' on '+project.action.daysPerWeek+' distinct days/week.</p></div><div class="preview-block"><b>Feedback</b><p>Points → weekly progress → reward eligibility</p></div>';
