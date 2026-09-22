@@ -69,7 +69,7 @@ The rest of the presentation continues through brainstorming, P/E, balancing, wi
 
 Previous version: versions/2026-09-22-before-live-strategy/index.html.
 
-The repository folder uses nearly the full available desktop height, with compact file rows and the schematic below. Downloads use plain text buttons. Reset, storage captions, draft counts, and the schematic state legend have been removed. S-shaped connectors meet the sides of the bubbles horizontally; the two vertical relationships retain vertical arrowheads.
+The repository folder uses nearly the full available desktop height, with compact file rows and the schematic below. Downloads use plain text buttons. Storage captions, draft counts, and the schematic state legend have been removed. Reset repo clears the local workshop draft after a second confirmation click and returns to the opening; it does not alter the GitHub repository. S-shaped connectors meet the sides of the bubbles horizontally; the two vertical relationships retain vertical arrowheads.
 
 
 ## Feedback, rewards, brainstorm, and feature planning
