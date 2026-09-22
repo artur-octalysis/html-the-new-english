@@ -5,3 +5,5 @@ body.styled{background:#f7fbfe;color:#00428f}.styled #tracker{padding:21px 19px}
 
 .standalone #tracker{max-width:430px;margin:auto;min-height:100vh}
 @media(min-width:201px) and (max-height:550px){.layout #tracker,.styled #tracker{padding:16px}.layout .app-header{margin-bottom:16px}.layout .heading h1{font-size:25px}.layout .heading p{margin:6px 0 14px}.layout .stats>div{padding:10px}.layout .stats strong{font-size:26px}.layout .goal{margin:14px 0}.layout form button{padding:11px}.layout #feedback{margin:9px 0;min-height:30px}}
+
+.rule-summary,.reward-summary{font-size:12px}.layout .rule-summary{font-size:9px;line-height:1.6;margin:8px 0}.layout .reward-summary{font-size:10px;margin:10px 0 16px;padding:10px;border:1px solid #d0e1ed;border-radius:8px;background:#edf6fd}.layout .reward-summary strong{font-size:17px;color:#005cc2}.layout .reward-summary span{display:block;font-size:9px;color:#52667a;margin-top:3px}body[data-stage="2"] .reward-summary{background:none;border:0}

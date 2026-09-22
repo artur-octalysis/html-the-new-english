@@ -1,30 +1,47 @@
-# Build Together presentation
+# One connected design project
 
-One continuously mounted phone (`fitness-demo.html`) evolves as the presenter scrolls through 15 chapters. `build-together.js` sets the stage through origin-checked messages; activity state remains inside the phone. Inputs and activity records survive chapter changes.
+The workshop follows the user's session-specific process:
+1. Strategy Dashboard
+2. Brainstorming
+3. Battle Plan (Feature List and Game Loop)
+4. Battle Plan (Balancing and Logic)
+5. Wireframes
+
+This sequence is authoritative for this presentation; it is not a claim of organization-wide naming approval. There are 21 scroll chapters, including the repository foundation, a cross-project change demonstration, and supporting Git, hosting, and data lessons.
+
+## Central argument
+
+The repository contains the project, not just a prototype. Structured decisions, stable IDs, AI instructions, tests, and HTML views make related changes visible and reviewable. Shared-source values update deterministic views. An instructed AI can propose and reconcile semantic edits across files; a repository alone does not execute AI or guarantee strategic consistency.
+
+## Project source and views
+
+Canonical source: `site/project/fitness-project.json`.
+AI instructions and review responsibilities: `project/AI_CONTEXT.md`.
+Calculations: `site/assets/project-model.js`.
+Live project views and browser-edit state: `site/assets/project-workflow.js`.
+
+The right-hand panel progresses through strategy, ideas, feature decisions, loop, and economy. It becomes the existing interactive phone at Wireframes. Phone activities and saved records are teaching data, with no remote database. Reward redemption is not implemented; the feature list deliberately marks it Model first.
+
+## Demonstrations
+
+- Economy: default expected cost is $1,920 over four weeks; full-participation cost is $8,000 against a $5,000 budget. Move cost to $1.25 to fit the upper bound under the simplified assumptions. This is scenario arithmetic, not a forecast or purchase.
+- Alignment: one activity on each of three days yields 30 points; the proposed 60-point reward needs six activities. The interface flags this as an unresolved demand on busy returners.
+- Dependency-aware change: inspect a proposed 10 → 5 minute threshold, acknowledge unresolved metric/economy validation, then apply it. Strategy, metric definition, feature labels, loop, and wireframe policy change together. The baseline remains marked for review. This is a scripted impact preview, not a live AI call.
+- Browser changes are temporary. Download current JSON to preserve proposed edits, then commit and review them in the repository. Restore workshop assumptions resets project rules, not logged activities.
+- Wireframe: under-threshold activity is recorded but earns no points. Qualifying activities earn points up to the daily cap. Weekly eligibility requires both distinct days and points. Week boundaries use the browser's local time; this is an explicit demo convention.
+- Repository → branch → PR → diff → merge → deletion → deployment remains simulated. The repository foundation appears before Strategy. Complete it before the later Git exercise.
 
 ## Presenting
 
-Use arrow keys or the bottom navigation. N toggles presenter notes. The phone is sticky on desktop; on narrow screens it becomes a compact sticky preview with a hide/show control. Its contents scroll independently.
+Arrow keys navigate; N toggles notes. Pause motion respects reduced-motion preferences. Mobile has a compact hideable project/phone preview. Panels and the phone scroll independently.
 
-The collaboration walkthrough intentionally has prerequisites: create the simulated repository, create the walking branch, open the pull request, test both options, mark reviewed, merge, delete the branch, deploy. These actions illustrate a GitHub workflow; they do not provision resources or make GitHub changes.
+60 minutes: framing/repository 5; Strategy 3; Brainstorming 2; Feature List/Loop 4; Logic/change 8; Wireframes 7; Git/hosting/data 9; practice 15; debrief 4; transitions 3.
+45 minutes: framing 3; Strategy 2; Brainstorming 1; Feature List/Loop 3; Logic/change 6; Wireframes 5; Git/hosting/data 5; practice 15; debrief 3; transitions 2.
 
-The data lesson mirrors phone records into a table. Enabling saving uses localStorage on the current browser/device. Reload phone demonstrates rehydration. Clear demo records removes the saved example. This is not a real backend, shared database, or multi-user service. No personal health data is required.
+Practice asks each pair to change a project decision, trace its implications, test, and hand it off. The downloadable fitness starter embeds baseline canonical rules. Exported project JSON can be given to the pair's AI alongside it to apply revised hypotheses.
 
-## Practice and timing
+## Development and validation
 
-Download `downloads/fitness-starter.html`: a self-contained editable starter with Run and Walk, complete activity logging, and no external dependencies. It opens directly as a standalone app. Pair contributions still use `prototypes/<team>/` with metadata and a README, following CONTRIBUTING.md.
+`npm run build` regenerates the self-contained baseline starter and builds the site. `npm test` checks gallery contribution handling, archive preservation, dependency IDs, reward exposure, qualification, daily caps, distinct days, and week boundaries. Browser verification covers the source-change demo, calculator, wireframe behavior, responsive views, and the existing Git/saving flow.
 
-60 min: framing 5, build demo 9, Git 12, hosting/data 9, practice 15, debrief 5, transitions 5.
-45 min: framing 3, build demo 6, Git 8, hosting/data 6, practice 15, debrief 4, transitions 3.
-
-## Previous version
-
-`versions/2026-09-22-before-build-together/` contains the entire built site from commit 30814e17fdee54564b73abd80808c90e1b6eaf67. It is copied into the published site's `/versions/` directory. Do not revise archived files when editing the current presentation.
-
-## Implementation
-
-Current presentation: `site/index.html`, `site/assets/build-together.css`, `site/assets/build-together.js`.
-Phone: `site/fitness-demo.html`, `site/assets/fitness-demo.css`, `site/assets/fitness-demo.js`.
-The standalone starter embeds the phone's CSS/JS; synchronize it when changing the phone.
-
-Validation: `npm test`, `npm run build`, JavaScript syntax checks, and browser walkthrough of the incremental phone, collaboration prerequisites, logging, persistence/reload, reset, and gallery/archive links.
+The archived pre-Build-Together site remains at `versions/2026-09-22-before-build-together/`; leave it unchanged. Later iterations are also recorded in Git history.
