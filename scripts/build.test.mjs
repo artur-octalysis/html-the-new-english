@@ -18,7 +18,11 @@ test('builds a newly contributed prototype into the gallery and rejects symbolic
     await writeFile(join(prototype,'index.html'),'<!doctype html><html lang="en"><title>Prototype</title><body>Working</body></html>');
     await writeFile(join(prototype,'README.md'),'Purpose and handoff');
     await writeFile(join(prototype,'prototype.json'),JSON.stringify(valid));
+    const archive=join(dir,'versions','before-redesign');await mkdir(archive,{recursive:true});
+    const archivedHtml='<!doctype html><html><title>Archived version</title><body>Preserved</body></html>';
+    await writeFile(join(archive,'index.html'),archivedHtml);
     await build(dir);
+    assert.equal(await readFile(join(dir,'dist','versions','before-redesign','index.html'),'utf8'),archivedHtml);
     const manifest=JSON.parse(await readFile(join(dir,'dist','prototypes.json'),'utf8'));
     assert.equal(manifest[0].path,'prototypes/pair-one/index.html');
     assert.match(await readFile(join(dir,'dist',manifest[0].path),'utf8'),/Working/);

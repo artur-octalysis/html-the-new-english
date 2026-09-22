@@ -1,0 +1,11 @@
+[
+  {
+    "id": "example",
+    "title": "A small first contribution",
+    "team": "Workshop example",
+    "description": "An example to test the presentation flow: choose one topic, share an idea, and see the response.",
+    "coreDrive": "Development & Accomplishment — hypothesis to test",
+    "kind": "example",
+    "path": "prototypes/example/index.html"
+  }
+]
