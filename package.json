@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "build": "node scripts/build.mjs",
-    "test": "node --test scripts/build.test.mjs"
+    "test": "node --test scripts/*.test.mjs",
+    "prebuild": "node scripts/sync-fitness-starter.mjs"
   },
   "engines": {
     "node": ">=22"
