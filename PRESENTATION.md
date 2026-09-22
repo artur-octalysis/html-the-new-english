@@ -7,7 +7,7 @@ The workshop follows the user's session-specific process:
 4. Battle Plan (Balancing and Logic)
 5. Wireframes
 
-This sequence is authoritative for this presentation; it is not a claim of organization-wide naming approval. There are 22 scroll chapters, including the repository foundation, a cross-project change demonstration, and supporting Git, hosting, and data lessons.
+This sequence is authoritative for this presentation; it is not a claim of organization-wide naming approval. There are 25 scroll chapters, including the repository foundation, a cross-project change demonstration, and supporting Git, hosting, and data lessons.
 
 ## Central argument
 
@@ -48,21 +48,38 @@ The archived pre-Build-Together site remains at `versions/2026-09-22-before-buil
 
 ## Live Strategy Dashboard opening (22 September revision)
 
-The first five folds are now:
+The first six folds are now:
 1. Cover: left-side introduction and architectural background, with the preview hidden.
 2. Create repository: reveal an empty folder. The detailed file-format explanation is expandable.
 3. Set the business metrics: write four priority-ordered outcomes or use the prepared fitness example. Set creates context/business-metrics.md.
 4. Define player axes: write four axis endpoints or use the prepared example. Set creates context/player-axes.json.
 5. Create four player types: select a quadrant, write a title and profile, optionally upload an image, and adjust eight Core Drive emphasis sliders. Set locks the profile and adds players/player-N.html plus a shared context/player-types.json.
 
-The sticky schematic follows the supplied player → action → metric/feedback/reward relationships. Filled nodes mean set; a blue outline means currently discussing. Player completion requires four set profiles.
+6. Desired Actions: write chronological actions for Discovery, Onboarding, Scaffolding, and Endgame; define each win-state and select linked business metrics. Each set phase updates context/desired-actions.json. Editing business metrics unlocks action phases for review.
+
+The sticky schematic follows the supplied player → action → metric/feedback/reward relationships. Nodes light up as decisions are set. The diagram has no state legend or discussion outlines. Player completion requires four set profiles.
 
 Examples follow the reference dashboard's method: priority-ordered quantifiable outcomes, two psychographic dimensions, four quadrants, and Core Drive hypotheses. The fitness names, numbers, and scores are proposed teaching examples, not source-deck facts or research. The chart is a neutral eight-axis input visualization, not official framework artwork.
 
 Each “Write a fitness example” button animates the draft. Typing cancels the animation; Pause motion or reduced-motion preferences produce an immediate fill. Images are optional PNG/JPEG/WebP up to 1.2 MB and remain local. Suggestions use initials until an image is provided.
 
-Set decisions generate real downloadable file content in a simulated repository; they do not make GitHub API calls. Open a file to inspect or download it, or download all set files as a ZIP with folder paths preserved. Drafts persist in local browser storage when available. “Start over” requires a second click. Editing axes unlocks all player profiles for review; editing a decision removes its set artifact until it is set again.
+Set decisions generate real downloadable file content in a simulated repository; they do not make GitHub API calls. Open a file to inspect or download it, or download all set files as a ZIP with folder paths preserved. Drafts persist in local browser storage when available. Editing axes unlocks all player profiles for review; editing a decision removes its set artifact until it is set again.
 
 The rest of the presentation continues through brainstorming, P/E, balancing, wireframes, Git, hosting, and data. Written workshop context accompanies the project JSON export. Narrative metric edits do not silently change the existing executable fitness qualification or economy rules.
 
 Previous version: versions/2026-09-22-before-live-strategy/index.html.
+
+The repository folder uses nearly the full available desktop height, with compact file rows and the schematic below. Downloads use plain text buttons. Reset, storage captions, draft counts, and the schematic state legend have been removed. S-shaped connectors meet the sides of the bubbles horizontally; the two vertical relationships retain vertical arrowheads.
+
+
+## Feedback, rewards, brainstorm, and feature planning
+
+After Desired Actions, two live list editors capture client context: feedback mechanics/vehicles and available rewards. Set generates context/feedback.md and context/rewards.md.
+
+Brainstorming uses a central workshop octagon with eight selectable Core Drive groups. Write one idea per line, use optional fitness suggestions, and set each group. Saved groups generate brainstorm/core-drives.json and feed the P/E table directly. The board is a custom workshop arrangement, not official framework artwork.
+
+Every saved idea becomes a feature row with Power and Ease scores from 1 to 5. All rows need both scores before MVP/V1/V2 choices become available. Optional score suggestions fill missing values; they are discussion examples, not an approved TOG formula. Optional release suggestions classify high-power/easier examples as MVP, then V1/V2; the presenter can change each choice. Set saves planning/pe-features.json.
+
+Idea IDs are stable within a Core Drive for unchanged text. Reordering preserves scores. Changing an idea creates a new ID and requires scoring; editing any brainstorm group unlocks the feature plan. Older browser drafts migrate with empty editors while retaining existing metrics, players, and action phases.
+
+The subsequent game-loop and economy lessons remain the baseline fitness demonstration. The feature plan is a proposed scope, not an automatic implementation of the chosen ideas.
