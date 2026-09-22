@@ -1,0 +1,27 @@
+name: Prepare pair handout
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  handout:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node scripts/distribute-starter.mjs
+      - name: Create handout branch
+        env:
+          HANDOUT_BRANCH: workshop/starter-${{ github.run_id }}-${{ github.run_attempt }}
+        run: |
+          git switch -c "$HANDOUT_BRANCH"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add pairs
+          git commit -m 'Distribute workshop starter to all pairs'
+          git push origin "$HANDOUT_BRANCH"
+          echo "Open a pull request, wait for validation, then merge: https://github.com/$GITHUB_REPOSITORY/compare/main...$HANDOUT_BRANCH?expand=1" >> "$GITHUB_STEP_SUMMARY"

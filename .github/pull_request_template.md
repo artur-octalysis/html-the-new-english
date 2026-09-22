@@ -8,7 +8,7 @@
 - [ ] Main interaction works
 - [ ] Empty/error states and reset work where relevant
 - [ ] Keyboard controls and narrow layout checked
-- [ ] prototype.json and README.md are complete
+- [ ] Pair README.md is complete (legacy prototypes also require prototype.json)
 - [ ] No credentials, client data, or personal information
 
 ## Limitations and next step
