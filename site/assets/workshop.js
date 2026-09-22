@@ -12,6 +12,16 @@ function openFile(path){opened=projectFiles(state).find(f=>f.path===path);if(!op
 $('close-file').onclick=()=>$('file-dialog').close();
 $('download-file').onclick=()=>{if(opened)download(opened.content,opened.path.split('/').pop(),opened.type);};
 $('download-workshop').onclick=()=>{const files=projectFiles(state);if(files.length)download(zipFiles(files),'move-strategy-workshop.zip','application/zip');};
+let resetDeadline=0,resetTimer=null;
+$('reset-workshop').onclick=()=>{
+ if(Date.now()>resetDeadline){
+  resetDeadline=Date.now()+5000;$('reset-workshop').textContent='Confirm reset';
+  announce('Click Confirm reset to clear this browser’s workshop draft.');
+  clearTimeout(resetTimer);resetTimer=setTimeout(()=>{resetDeadline=0;$('reset-workshop').textContent='Reset repo';},5000);return;
+ }
+ try{localStorage.removeItem(KEY);}catch{announce('The saved draft could not be cleared. Please try again.');return;}
+ typingToken++;imageToken++;location.href=location.pathname+'?fresh='+Date.now()+'#opening';
+};
 function schematic(){
  const chapter=document.body.dataset.chapter,players=state.players.filter(p=>p.locked).length;
  const node=(key,x,y,w,a,b,complete,current)=>'<g class="node '+(complete?'complete ':'')+'" data-node="'+key+'"><rect x="'+x+'" y="'+y+'" width="'+w+'" height="40" rx="16"/><text x="'+(x+w/2)+'" y="'+(y+(b?17:24))+'" text-anchor="middle">'+a+(b?'<tspan x="'+(x+w/2)+'" dy="14">'+b+'</tspan>':'')+'</text></g>';
