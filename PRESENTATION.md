@@ -7,7 +7,7 @@ The workshop follows the user's session-specific process:
 4. Battle Plan (Balancing and Logic)
 5. Wireframes
 
-This sequence is authoritative for this presentation; it is not a claim of organization-wide naming approval. There are 21 scroll chapters, including the repository foundation, a cross-project change demonstration, and supporting Git, hosting, and data lessons.
+This sequence is authoritative for this presentation; it is not a claim of organization-wide naming approval. There are 22 scroll chapters, including the repository foundation, a cross-project change demonstration, and supporting Git, hosting, and data lessons.
 
 ## Central argument
 
@@ -33,10 +33,10 @@ The right-hand panel progresses through strategy, ideas, feature decisions, loop
 
 ## Presenting
 
-Arrow keys navigate; N toggles notes. Pause motion respects reduced-motion preferences. Mobile has a compact, always-visible project/phone preview. Panels and the phone scroll independently.
+Arrow keys navigate; N toggles notes. Pause motion respects reduced-motion preferences. Mobile has a compact sticky preview after repository creation; the cover hides it. Panels and the phone scroll independently.
 
-60 minutes: framing/repository 5; Strategy 3; Brainstorming 2; Feature List/Loop 4; Logic/change 8; Wireframes 7; Git/hosting/data 9; practice 15; debrief 4; transitions 3.
-45 minutes: framing 3; Strategy 2; Brainstorming 1; Feature List/Loop 3; Logic/change 6; Wireframes 5; Git/hosting/data 5; practice 15; debrief 3; transitions 2.
+60 minutes: opening/repository 4; live metrics/axes/players 12; brainstorming/P-E/loop 5; logic/change 5; wireframes 5; Git/hosting/data 7; practice 15; debrief 4; transitions 3.
+45 minutes: opening/repository 3; live strategy 8 (use suggestions); brainstorming/P-E/loop 3; logic/change 3; wireframes 3; Git/hosting/data 5; practice 15; debrief 3; transitions 2.
 
 Practice asks each pair to change a project decision, trace its implications, test, and hand it off. The downloadable fitness starter embeds baseline canonical rules. Exported project JSON can be given to the pair's AI alongside it to apply revised hypotheses.
 
@@ -45,3 +45,24 @@ Practice asks each pair to change a project decision, trace its implications, te
 `npm run build` regenerates the self-contained baseline starter and builds the site. `npm test` checks gallery contribution handling, archive preservation, dependency IDs, reward exposure, qualification, daily caps, distinct days, and week boundaries. Browser verification covers the source-change demo, calculator, wireframe behavior, responsive views, and the existing Git/saving flow.
 
 The archived pre-Build-Together site remains at `versions/2026-09-22-before-build-together/`; leave it unchanged. Later iterations are also recorded in Git history.
+
+## Live Strategy Dashboard opening (22 September revision)
+
+The first five folds are now:
+1. Cover: left-side introduction and architectural background, with the preview hidden.
+2. Create repository: reveal an empty folder. The detailed file-format explanation is expandable.
+3. Set the business metrics: write four priority-ordered outcomes or use the prepared fitness example. Set creates context/business-metrics.md.
+4. Define player axes: write four axis endpoints or use the prepared example. Set creates context/player-axes.json.
+5. Create four player types: select a quadrant, write a title and profile, optionally upload an image, and adjust eight Core Drive emphasis sliders. Set locks the profile and adds players/player-N.html plus a shared context/player-types.json.
+
+The sticky schematic follows the supplied player → action → metric/feedback/reward relationships. Filled nodes mean set; a blue outline means currently discussing. Player completion requires four set profiles.
+
+Examples follow the reference dashboard's method: priority-ordered quantifiable outcomes, two psychographic dimensions, four quadrants, and Core Drive hypotheses. The fitness names, numbers, and scores are proposed teaching examples, not source-deck facts or research. The chart is a neutral eight-axis input visualization, not official framework artwork.
+
+Each “Write a fitness example” button animates the draft. Typing cancels the animation; Pause motion or reduced-motion preferences produce an immediate fill. Images are optional PNG/JPEG/WebP up to 1.2 MB and remain local. Suggestions use initials until an image is provided.
+
+Set decisions generate real downloadable file content in a simulated repository; they do not make GitHub API calls. Open a file to inspect or download it, or download all set files as a ZIP with folder paths preserved. Drafts persist in local browser storage when available. “Start over” requires a second click. Editing axes unlocks all player profiles for review; editing a decision removes its set artifact until it is set again.
+
+The rest of the presentation continues through brainstorming, P/E, balancing, wireframes, Git, hosting, and data. Written workshop context accompanies the project JSON export. Narrative metric edits do not silently change the existing executable fitness qualification or economy rules.
+
+Previous version: versions/2026-09-22-before-live-strategy/index.html.
