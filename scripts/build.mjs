@@ -47,7 +47,8 @@ export async function build(projectRoot=root){
   }
   await validateFiles(join(projectRoot,'site'));
   const dist=join(projectRoot,'dist');await rm(dist,{recursive:true,force:true});await mkdir(dist,{recursive:true});
-  await cp(join(projectRoot,'site'),dist,{recursive:true});await cp(source,join(dist,'prototypes'),{recursive:true});
+  await cp(join(projectRoot,'site'),dist,{recursive:true});
+  if((await readdir(projectRoot)).includes('versions'))await cp(join(projectRoot,'versions'),join(dist,'versions'),{recursive:true});await cp(source,join(dist,'prototypes'),{recursive:true});
   await writeFile(join(dist,'prototypes.json'),JSON.stringify(manifest,null,2)+'\n');await writeFile(join(dist,'.nojekyll'),'');
   console.log(`Built presentation and gallery: ${manifest.length} prototype(s).`);
   return manifest;

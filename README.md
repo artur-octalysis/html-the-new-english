@@ -8,7 +8,7 @@ An interactive presentation and shared prototype gallery for The Octalysis Group
 
 ## Present
 
-Scroll or use the left/right arrow keys. Press N to toggle presenter notes. The presentation includes live layer and styling demos, a practice timer, and the repository contribution flow. Presenter notes appear on the same screen, so leave them hidden while screen-sharing unless you want the audience to see them.
+Scroll or use the left/right arrow keys. Press N to toggle presenter notes. The presentation builds one fitness tracker in a persistent floating phone: HTML → CSS → interaction → Git collaboration → hosting → activity records and saving. It includes a downloadable single-file fitness starter, a practice timer, and a simulated repository contribution flow. See [PRESENTATION.md](PRESENTATION.md) for the walkthrough and timing. Presenter notes appear on the same screen, so leave them hidden while screen-sharing unless you want the audience to see them.
 
 ## The shared workflow
 
@@ -23,6 +23,8 @@ site/                   Presentation, gallery, and shared assets
 prototypes/             Published team prototypes and handoff notes
   example/              Clearly labeled facilitator example
 templates/prototype/    Copyable starter files
+versions/               Complete archived presentations
+site/downloads/         Editable fitness starter
 scripts/                Dependency-free build and checks
 .github/workflows/      Pull request checks and GitHub Pages deployment
 ```
