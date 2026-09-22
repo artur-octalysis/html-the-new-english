@@ -2,7 +2,7 @@
   "id": "move-fitness-workshop",
   "revision": "workshop-1",
   "status": "Illustrative working hypothesis — not approved client strategy",
-  "process": ["Strategy Dashboard", "Brainstorming", "Battle Plan (Feature List and Game Loop)", "Battle Plan (Balancing and Logic)", "Wireframes"],
+  "process": ["Strategy Dashboard", "Brainstorming", "P/E Feature list and game loop", "Battle Plan (Balancing and Logic)", "Wireframes"],
   "owners": {"strategy": "Strategy lead", "economy": "Economy designer", "experience": "Experience designer", "approval": "Project owner"},
   "audience": {"primary": "Busy returners", "need": "A manageable way to restart movement", "secondary": "Progress seekers", "secondaryNeed": "Visible evidence of consistency", "note": "Workshop audience hypotheses, not researched segments or official player-type labels."},
   "metric": {"id": "M1", "name": "Week-4 active-member rate", "baselinePercent": 30, "targetPercent": 40, "definition": "Share of the starting cohort with qualifying activities on at least the target number of distinct days in week 4."},

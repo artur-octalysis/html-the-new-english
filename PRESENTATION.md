@@ -3,7 +3,7 @@
 The workshop follows the user's session-specific process:
 1. Strategy Dashboard
 2. Brainstorming
-3. Battle Plan (Feature List and Game Loop)
+3. P/E Feature list and game loop
 4. Battle Plan (Balancing and Logic)
 5. Wireframes
 
@@ -33,7 +33,7 @@ The right-hand panel progresses through strategy, ideas, feature decisions, loop
 
 ## Presenting
 
-Arrow keys navigate; N toggles notes. Pause motion respects reduced-motion preferences. Mobile has a compact hideable project/phone preview. Panels and the phone scroll independently.
+Arrow keys navigate; N toggles notes. Pause motion respects reduced-motion preferences. Mobile has a compact, always-visible project/phone preview. Panels and the phone scroll independently.
 
 60 minutes: framing/repository 5; Strategy 3; Brainstorming 2; Feature List/Loop 4; Logic/change 8; Wireframes 7; Git/hosting/data 9; practice 15; debrief 4; transitions 3.
 45 minutes: framing 3; Strategy 2; Brainstorming 1; Feature List/Loop 3; Logic/change 6; Wireframes 5; Git/hosting/data 5; practice 15; debrief 3; transitions 2.
