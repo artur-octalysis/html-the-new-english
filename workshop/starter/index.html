@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Every move counts</title>
+<style id="app-css">
+* { box-sizing: border-box; }
+body { margin: 0; padding: 24px; background: #f2f7fc; color: #0e2a6e; font-family: system-ui, sans-serif; }
+main { max-width: 420px; margin: auto; }
+h1 { font-size: 36px; line-height: 1.1; }
+.stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.stats p, form, li { background: white; padding: 16px; border-radius: 16px; }
+strong { font-size: 28px; display: block; }
+form { display: flex; flex-direction: column; gap: 12px; }
+label { display: grid; gap: 6px; }
+input, select, button { font: inherit; padding: 12px; border: 1px solid #b7cfe5; border-radius: 8px; }
+button { background: #005cc2; color: white; cursor: pointer; }
+ul { list-style: none; padding: 0; }
+li { margin-bottom: 8px; }
+</style></head><body>
+<!-- APP HTML START -->
+<main>
+  <p>MOVE / YOUR DAILY MOMENTUM</p>
+  <h1>Every move counts.</h1>
+  <p>A little movement. A little more you.</p>
+  <div class="stats">
+    <p><strong id="minutes">0</strong> minutes</p>
+    <p><strong id="sessions">0</strong> activities</p>
+  </div>
+  <form id="activity-form">
+    <label>Activity <select name="activity"><option>Walk</option><option>Run</option></select></label>
+    <label>Minutes <input name="minutes" type="number" min="1" max="300" step="1" value="10" required></label>
+    <button type="button" id="log-activity">Log my activity</button>
+  </form>
+  <p id="feedback" role="status">Start with a moment of movement.</p>
+  <ul id="activities" aria-label="Logged activities"></ul>
+</main>
+<!-- APP HTML END -->
+<script id="app-js">
+const activities = [];
+document.getElementById('log-activity').addEventListener('click', () => {
+  const form = document.getElementById('activity-form');
+  if (!form.reportValidity()) return;
+  const minutes = Number(form.elements.minutes.value);
+  if (!Number.isInteger(minutes) || minutes < 1 || minutes > 300) return;
+  const activity = { type: form.elements.activity.value, minutes };
+  activities.push(activity);
+  document.getElementById('minutes').textContent = activities.reduce((sum, item) => sum + item.minutes, 0);
+  document.getElementById('sessions').textContent = activities.length;
+  const row = document.createElement('li');
+  row.textContent = activity.type + ' · ' + minutes + ' minutes';
+  document.getElementById('activities').prepend(row);
+  document.getElementById('feedback').textContent = 'You made time for yourself. Nice work!';
+  parent.postMessage({ source: 'move-starter', activity }, '*');
+});
+</script></body></html>

@@ -2,6 +2,7 @@ import { readdir, readFile, writeFile, mkdir, cp, rm, lstat } from 'node:fs/prom
 import { resolve, join, extname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { Script } from 'node:vm';
+import { publishPairs } from './pair-workshop.mjs';
 
 const root=resolve(fileURLToPath(new URL('..',import.meta.url)));
 const allowed=new Set(['.html','.css','.js','.json','.md','.png','.jpg','.jpeg','.gif','.svg','.webp','.avif','.ico','.woff','.woff2','.mp3','.mp4','.webm','.ogg']);
@@ -49,6 +50,7 @@ export async function build(projectRoot=root){
   const dist=join(projectRoot,'dist');await rm(dist,{recursive:true,force:true});await mkdir(dist,{recursive:true});
   await cp(join(projectRoot,'site'),dist,{recursive:true});
   if((await readdir(projectRoot)).includes('versions'))await cp(join(projectRoot,'versions'),join(dist,'versions'),{recursive:true});await cp(source,join(dist,'prototypes'),{recursive:true});
+  await publishPairs(projectRoot,dist,validateFiles,manifest);
   await writeFile(join(dist,'prototypes.json'),JSON.stringify(manifest,null,2)+'\n');await writeFile(join(dist,'.nojekyll'),'');
   console.log(`Built presentation and gallery: ${manifest.length} prototype(s).`);
   return manifest;

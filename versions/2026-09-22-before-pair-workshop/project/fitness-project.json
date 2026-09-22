@@ -1,0 +1,18 @@
+{
+  "id": "move-fitness-workshop",
+  "revision": "workshop-1",
+  "status": "Illustrative working hypothesis — not approved client strategy",
+  "process": ["Strategy Dashboard", "Brainstorming", "P/E Feature list and game loop", "Battle Plan (Balancing and Logic)", "Wireframes"],
+  "owners": {"strategy": "Strategy lead", "economy": "Economy designer", "experience": "Experience designer", "approval": "Project owner"},
+  "audience": {"primary": "Busy returners", "need": "A manageable way to restart movement", "secondary": "Progress seekers", "secondaryNeed": "Visible evidence of consistency", "note": "Workshop audience hypotheses, not researched segments or official player-type labels."},
+  "metric": {"id": "M1", "name": "Week-4 active-member rate", "baselinePercent": 30, "targetPercent": 40, "definition": "Share of the starting cohort with qualifying activities on at least the target number of distinct days in week 4."},
+  "action": {"id": "A1", "name": "Log a qualifying Run or Walk", "minimumMinutes": 10, "daysPerWeek": 3},
+  "economy": {"pointsPerActivity": 10, "rewardedActivitiesPerDay": 3, "weeklyPointsThreshold": 60, "rewardCost": 2, "weeklyMembers": 1000, "qualifyingMemberRate": 0.6, "redemptionRate": 0.4, "budget": 5000, "weeks": 4, "rewardLimitPerMemberPerWeek": 1},
+  "rewards": [{"id":"R1","name":"Progress points","type":"Virtual feedback; no cash value"},{"id":"R2","name":"Consistency badge","type":"Non-cash acknowledgement"},{"id":"R3","name":"Partner reward","type":"Illustrative cost-bearing reward; availability and cost need validation"}],
+  "feedback": {"mechanics": ["Immediate activity acknowledgement", "Points with a daily earning cap", "Distinct active days and weekly progress"], "vehicles": ["In-app confirmation", "Weekly progress meter", "Activity history and reward status"]},
+  "ideas": [{"id":"I1","name":"Small-start mission","drive":"Development & Accomplishment","hypothesis":"A reachable first action helps returners begin.","feature":"F1"},{"id":"I2","name":"Visible weekly progress","drive":"Development & Accomplishment","hypothesis":"Visible progress encourages return visits.","feature":"F2"},{"id":"I3","name":"Partner reward","drive":"Ownership & Possession","hypothesis":"A bounded reward adds perceived value.","feature":"F3"},{"id":"I4","name":"Team challenge","drive":"Social Influence & Relatedness","hypothesis":"A shared goal encourages accountability.","feature":"F4"}],
+  "features": [{"id":"F1","name":"Run / Walk logging","power":5,"ease":5,"decision":"Build","action":"A1"},{"id":"F2","name":"Weekly progress + points","power":4,"ease":4,"decision":"Build","action":"A1"},{"id":"F3","name":"Partner reward redemption","power":3,"ease":2,"decision":"Model first","action":"A1"},{"id":"F4","name":"Team challenge","power":4,"ease":1,"decision":"Later","action":"A1"}],
+  "dependencies": [{"from":"M1","to":"A1","reason":"Metric definition counts the desired action"},{"from":"A1","to":"F1","reason":"Logging enables the desired action"},{"from":"A1","to":"F2","reason":"Feedback measures qualifying progress"},{"from":"F2","to":"R3","reason":"Eligibility uses points and distinct days"}],
+  "reviewRequired": ["Validate player hypotheses", "Rebaseline M1 when qualification changes", "Validate reward costs and redemption assumptions", "Test perceived fairness and motivation"],
+  "simulation": "All values are invented for teaching. Browser edits are temporary until exported and committed. No live AI agent or remote database is connected."
+}
