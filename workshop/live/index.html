@@ -25,4 +25,19 @@ li { margin-bottom: 8px; }</style></head><body><!-- APP HTML START --><main>
   </form>
   <p id="feedback" role="status">Start with a moment of movement.</p>
   <ul id="activities" aria-label="Logged activities"></ul>
-</main><!-- APP HTML END --><script id="app-js">document.addEventListener("submit",event=>event.preventDefault());</script></body></html>
+</main><!-- APP HTML END --><script id="app-js">const activities = [];
+document.getElementById('log-activity').addEventListener('click', () => {
+  const form = document.getElementById('activity-form');
+  if (!form.reportValidity()) return;
+  const minutes = Number(form.elements.minutes.value);
+  if (!Number.isInteger(minutes) || minutes < 1 || minutes > 300) return;
+  const activity = { type: form.elements.activity.value, minutes };
+  activities.push(activity);
+  document.getElementById('minutes').textContent = activities.reduce((sum, item) => sum + item.minutes, 0);
+  document.getElementById('sessions').textContent = activities.length;
+  const row = document.createElement('li');
+  row.textContent = activity.type + ' · ' + minutes + ' minutes';
+  document.getElementById('activities').prepend(row);
+  document.getElementById('feedback').textContent = 'You made time for yourself. Nice work!';
+  parent.postMessage({ source: 'move-starter', activity }, '*');
+});</script></body></html>
