@@ -14,8 +14,10 @@ function status(text){$('chat-operation').textContent=text;}
 const operation=document.createElement('p');operation.id='chat-operation';operation.setAttribute('role','status');operation.className='caption';$('chat-form').after(operation);
 function prompt(){ $('conflict-path').textContent='pairs/'+selectedPair+'/index.html'; $('setup-prompt').textContent=`Help me join this workshop using this local AI coding session. My pair is ${selectedPair}.
 
+First, ask me which local folder I want to keep the repository in, and wait for my answer before running setup commands or cloning. Show the full destination path, including the html-the-new-english subfolder. Do not choose a location for me.
+
 1. Check Git and GitHub CLI (gh). Guide me through missing setup and GitHub browser sign-in; never ask for credentials in chat.
-2. Clone https://github.com/artur-octalysis/html-the-new-english into a new folder, or safely reuse an existing clone. Check my Git commit name and email.
+2. Clone https://github.com/artur-octalysis/html-the-new-english into the destination I selected. If it already exists, inspect it and ask whether to reuse it if it is a clone of this repository, or choose another location; never overwrite existing files. Check my Git commit name and email.
 3. Check push permission. If needed, prepare my fork and keep the original repository as upstream. Explain the remotes.
 4. Create or resume pair/${selectedPair}. Read pairs/${selectedPair}/README.md. Work only in that pair folder.
 5. Show the local path and branch. If index.html is missing, wait for the presenter’s handout. Do not push yet.`;
