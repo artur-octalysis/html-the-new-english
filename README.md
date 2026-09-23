@@ -2,8 +2,8 @@
 
 An interactive presentation and shared prototype gallery for The Octalysis Group. HTML, CSS, JavaScript, AI workflows, and practical ways to build on each other's work.
 
-- **Presentation:** https://artur-octalysis.github.io/html-the-new-english/
-- **Prototype gallery:** https://artur-octalysis.github.io/html-the-new-english/gallery.html
+- **Presentation:** https://artur-octalysis.github.io/tog-learning/
+- **Prototype gallery:** https://artur-octalysis.github.io/tog-learning/gallery.html
 - **Contribute:** [CONTRIBUTING.md](CONTRIBUTING.md)
 
 ## Present
