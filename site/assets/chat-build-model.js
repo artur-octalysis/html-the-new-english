@@ -9,5 +9,5 @@ export function buildDocument(sources,stage){
 }
 export function terminalCommands(pair){
  if(!/^[a-z]+(?:-[a-z]+)*$/.test(pair))throw Error('Invalid pair name');
- return `# Sign in (Git and GitHub CLI must be installed)\ngh auth login --hostname github.com --git-protocol https --web\ngh auth setup-git\n\n# Clone once into a new folder\ngh repo clone artur-octalysis/html-the-new-english\ncd html-the-new-english\n\n# Create your pair’s branch\ngit switch -c pair/${pair}\n\n# Read your shared brief\ncat pairs/${pair}/README.md`;
+ return `# Sign in (Git and GitHub CLI must be installed)\ngh auth login --hostname github.com --git-protocol https --web\ngh auth setup-git\n\n# Clone once into a new folder\ngh repo clone artur-octalysis/tog-learning\ncd tog-learning\n\n# Create your pair’s branch\ngit switch -c pair/${pair}\n\n# Read your shared brief\ncat pairs/${pair}/README.md`;
 }

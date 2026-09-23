@@ -2,7 +2,7 @@
 'use strict';
 const $=id=>document.getElementById(id);
 let prototypes=[],active=null,opener=null;
-const repo='https://github.com/artur-octalysis/html-the-new-english';
+const repo='https://github.com/artur-octalysis/tog-learning';
 function node(tag,className,text){const el=document.createElement(tag);if(className)el.className=className;if(text!==undefined)el.textContent=text;return el}
 function openPrototype(item,trigger){active=item;opener=trigger;$('viewer-title').textContent=item.title;$('viewer-team').textContent=item.team;$('prototype-frame').title=item.title;$('prototype-frame').src=item.path;$('frame-area').classList.remove('mobile');$('width-toggle').setAttribute('aria-pressed','false');$('width-toggle').textContent='Mobile width';$('viewer').showModal();document.body.classList.add('viewer-open');$('close-viewer').focus();history.replaceState(null,'','#'+item.id)}
 function closePrototype(){if($('viewer').open)$('viewer').close();$('prototype-frame').src='about:blank';document.body.classList.remove('viewer-open');history.replaceState(null,'',location.pathname+location.search);if(opener)opener.focus();active=null}

@@ -1,13 +1,13 @@
 import {buildDocument} from '../site/assets/chat-build-model.js';
 import {allowedPath} from './security.mjs';
-export const REPO='artur-octalysis/html-the-new-english';
+export const REPO='artur-octalysis/tog-learning';
 export const BRANCH=process.env.WORKSHOP_BRANCH||'workshop/hosted-presenter';
 export const STATE='workshop/live/session.json';
 const root='/repos/'+REPO;
 export class GitHubWorkspace{
  constructor(token,request=fetch){this.token=token;this.request=request;}
  async api(path,method='GET',body){const response=await this.request('https://api.github.com'+path,{method,headers:{Accept:'application/vnd.github+json',Authorization:'Bearer '+this.token,'X-GitHub-Api-Version':'2022-11-28','Content-Type':'application/json'},body:body===undefined?undefined:JSON.stringify(body)});const data=await response.json().catch(()=>({}));if(!response.ok){const error=Error(data.message||'GitHub could not complete this operation.');error.status=response.status;throw error;}return data;}
- async authorize(id){const user=await this.api('/user');if(String(user.id)!==String(id))throw Object.assign(Error('Only the workshop presenter can change repository files.'),{status:403});const repo=await this.api(root);if(!repo.permissions?.push)throw Object.assign(Error('Install the workshop GitHub App on html-the-new-english and grant repository access.'),{status:403});return {id:user.id,login:user.login};}
+ async authorize(id){const user=await this.api('/user');if(String(user.id)!==String(id))throw Object.assign(Error('Only the workshop presenter can change repository files.'),{status:403});const repo=await this.api(root);if(!repo.permissions?.push)throw Object.assign(Error('Install the workshop GitHub App on tog-learning and grant repository access.'),{status:403});return {id:user.id,login:user.login};}
  async ref(branch){try{return (await this.api(root+'/git/ref/heads/'+branch)).object.sha;}catch(error){if(error.status===404)return null;throw error;}}
  async content(path,ref=BRANCH){try{const data=await this.api(root+'/contents/'+path+'?ref='+encodeURIComponent(ref));if(data.type!=='file'||data.encoding!=='base64')throw Error('This is not a readable text file.');return Buffer.from(data.content,'base64').toString();}catch(error){if(error.status===404)return null;throw error;}}
  async state(){const head=await this.ref(BRANCH);if(!head)return {head:null,stage:-1};const raw=await this.content(STATE,head);return {head,...(raw?JSON.parse(raw):{stage:-1})};}
