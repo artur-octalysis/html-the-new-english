@@ -6,17 +6,19 @@ Confirm everyone has a GitHub account and a local AI coding tool with terminal a
 The public repository can be cloned without collaborator access. Drivers can contribute through their own forks; collaborators can push branches to the original repository. Check remotes before pushing. Do not put credentials in prompts. No participant invitations have been issued by this project.
 
 ## Live build and real handout
-Run `npm run build` and `npm run present` in your local repository. Open http://127.0.0.1:8768/ . Keep that terminal running. The public Pages site can display files but cannot use your Git credentials; the local presenter service uses your existing gh browser sign-in.
+Open the public presentation and click **Sign in with GitHub** in the top navigation. Authorize the Octalysis HTML Workshop app as artur-octalysis. Other accounts cannot run the build. Allow the sign-in popup if the browser blocks it.
 
-The chat is a prepared teaching sequence, not a remote AI model. Each Run nevertheless changes a real file:
-1. Create workshop/live/index.html in an isolated worktree from origin/main.
-2. Add CSS to the same file.
-3. Add JavaScript to the same file.
-4. Copy it into every pair folder and update workshop/starter/index.html; run validation, commit, push, open a PR, wait for GitHub checks, and merge using the facilitator account. This final button publishes the handout; do not click it early in rehearsal against the real repository.
+The chat is a prepared teaching sequence, not a remote AI model. Each Run changes a real file:
+1. Commit workshop/live/index.html on workshop/hosted-presenter.
+2. Commit CSS to the same file.
+3. Commit JavaScript to the same file.
+4. Copy into every pair folder and the canonical starter, open a PR, wait for validation on its exact head, and merge. Do not run this final prompt early in rehearsal.
 
-All Git operations run in a separate temporary worktree. The presenter’s checkout and existing participant work remain separate. The handout refuses to overwrite existing pair index.html files. Publication errors preserve the local files and can be retried in the same session. Stop/restart the server for a fresh presentation before distributing; it does not delete earlier worktrees. After successful publication, the presenter viewer follows main and fetches new pair changes periodically.
+The handout refuses to overwrite existing pair index.html files. Drafts remain in GitHub if the browser closes; sign in again to resume. After publication, the viewer follows main. The public frontend updates after Pages deployment. The hosted service is deployed separately on Vercel.
 
-Double-click index.html in the folder to open the mobile-width browser window. Folder and browser can coexist, close and reopen independently, and be dragged by their title bars. Enter opens selected icons/files; touch uses a single tap. The folder path bar shows the subset being viewed: pairs/ or workshop/live/.
+Local fallback: npm run build, then npm run present, then http://127.0.0.1:8768/. This uses GitHub CLI and an isolated temporary worktree. Use only one handout route.
+
+Double-click index.html in the folder to open the mobile-width browser window. Markdown opens in its own formatted reader. Folder, reader and browser can coexist, close and reopen independently, and be dragged by their title bars. Enter opens selected icons/files; touch uses a single tap. The folder path bar shows the subset being viewed: pairs/ or workshop/live/.
 
 The next chapter supplies a pair-specific sync prompt. Participants inspect their remotes and local changes, then fetch the original repository’s main and merge it into their current pair branch. A fork usually uses upstream/main; a direct clone usually uses origin/main. Never force-reset participant work. Confirm pairs/<pair>/index.html exists before practice.
 
