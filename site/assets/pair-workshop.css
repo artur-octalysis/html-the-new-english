@@ -83,3 +83,18 @@
 .deploy-icon{position:absolute;right:24px;top:28px;color:#005cc2}
 .deploy-icon svg{width:40px;height:40px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
 @media(max-width:600px){.git-timeline li{font-size:9px}.git-timeline li>span{width:28px;height:28px}.git-timeline li::before{top:13px}}
+
+#architecture .content{width:100%;max-width:1240px;margin:auto}
+.system-map{background:#ffffffeb;border:1px solid var(--line);border-radius:24px;padding:24px 12px;overflow-x:auto}
+.system-map>svg{display:block;width:100%;min-width:720px}
+.system-node>rect{fill:#fff;stroke:#cfdfef;stroke-width:2}
+.system-node text{font:600 19px 'Libre Franklin',sans-serif;fill:#0e2a6e}
+.system-icon{fill:none;stroke:#005cc2;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.system-edge>path{fill:none;stroke:#005cc2;stroke-width:2.5}
+.system-edge text{font:500 15px 'Libre Franklin',sans-serif;fill:#526886;text-anchor:middle;paint-order:stroke;stroke:white;stroke-width:7px;stroke-linejoin:round}
+.system-input>path{stroke:#c57412}.system-input text{fill:#9b5a0c}
+#architecture{padding-top:110px;padding-bottom:40px}
+#architecture h2{font-size:clamp(32px,3.5vw,52px);margin-bottom:22px}
+#architecture .eyebrow{margin-bottom:16px}
+.system-map{padding:12px}
+.system-map>svg{height:clamp(300px,calc(100svh - 300px),570px)}
