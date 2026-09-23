@@ -1,7 +1,9 @@
-# Build together: Is HTML the new English?
+# Build together: One Repo. Many Minds.
 
 ## Presentation flow
 1. Cover; the larger desktop icons are visible at the top right.
+Before connecting, explain the team value: a shared, versioned home for context, decisions, and interactive deliverables.
+
 2. Connect: pair selector and Codex / Claude Code vs Terminal Commands tabs. Both snippets follow the selected pair. Read the pair brief in the folder window.
 3. Build together: one chat with four prepared prompts. Run creates HTML, adds CSS, applies JavaScript, then copies the finished file to the five pair folders and publishes.
 4. Sync your local branch: copy a pair-specific AI prompt; explain fetch and merge for direct clones and forks.
@@ -34,3 +36,5 @@ See workshop/FACILITATOR.md for instructions. The hosted handler is api/workshop
 The database table is a browser-memory teaching example, not a connected database. The earlier presentation is preserved under versions/2026-09-22-before-pair-workshop/ and in Git history.
 
 The GitHub desktop icon opens a draggable teaching simulation. Entering the Git flow section opens it automatically. Slide buttons update its branch, diff, review, merge, and history views. These controls do not mutate GitHub. The conflict tab demonstrates choosing a heading, marking the file resolved, and committing a simulated resolution.
+
+Slide content opacity follows its viewport position during scrolling, including backward scrolling. Desktop windows remain opaque. Reduced-motion and print modes retain fully visible content.
