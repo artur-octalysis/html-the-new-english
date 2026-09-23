@@ -8,7 +8,9 @@ An interactive presentation and shared prototype gallery for The Octalysis Group
 
 ## Present
 
-Scroll or use left/right arrow keys. Connect your local Codex or Claude Code using a pair-specific setup prompt, read a real Markdown brief, then build HTML → CSS → JavaScript together. Distribute the starter through a reviewed handout branch, work in pairs, demonstrate a conflict, and explain branches, diffs, merging, deployment and databases. See [PRESENTATION.md](PRESENTATION.md) and [the facilitator guide](workshop/FACILITATOR.md).
+Scroll or use left/right arrow keys. Connect with pair-specific AI prompts or terminal commands. A desktop-style folder and browser coexist on the right. The Build Together chat creates HTML, adds CSS and JS, then copies the real screen to each pair and publishes it. The next chapter teaches how to sync the local pair branch with main.
+
+For real file creation and pushing, use the local presenter workspace: `npm run build`, then `npm run present`, then open http://127.0.0.1:8768/ . It uses the facilitator’s GitHub CLI sign-in. The public site is read-only. Chat code is prepared; Git operations are real. See [PRESENTATION.md](PRESENTATION.md) and [the facilitator guide](workshop/FACILITATOR.md).
 
 ## The shared workflow
 
@@ -56,4 +58,4 @@ npm run build
 python3 -m http.server 8000 --directory dist
 ```
 
-GitHub Pages serves a public static site. There is no database, private submission form, or server-side execution.
+GitHub Pages serves the public static site. Real repository writes run through the local presenter service using the facilitator’s GitHub CLI session. The activity database remains an in-memory teaching demonstration.
