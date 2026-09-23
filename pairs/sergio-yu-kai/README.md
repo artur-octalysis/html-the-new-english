@@ -6,6 +6,16 @@ Help a busy adult returning to movement log a walk or run and feel encouraged to
 ## Fitness tracker context
 Our fictional app helps people build a sustainable movement habit. Start with one screen: activity type, minutes, a log button, and visible progress. Use fictional activities; no accounts or real health data. Avoid shame or punitive streaks.
 
+## Audience — workshop hypothesis
+Our primary audience is **busy adults returning to movement** after an inconsistent routine. They want to feel more active, but work, family responsibilities, and low confidence can make restarting difficult. A short walk or run should feel worthwhile, even when they cannot exercise every day.
+
+- **What they need:** a quick way to log an activity, a manageable next step, and reassuring evidence that small efforts count.
+- **What may motivate them:** achievable goals, visible personal progress, and encouraging feedback. Treat these as hypotheses to explore through your chosen Core Drive.
+- **What can discourage them:** complicated tracking, comparison with highly active people, and losing all progress after missing a day.
+- **Secondary audience:** progress seekers who already move occasionally and want to see their consistency improve over time.
+
+Design primarily for the busy returner. These are fictional audience assumptions for the exercise, not findings from user research.
+
 ## Business metrics — workshop hypotheses
 - First-week activation: increase the share of new users logging their first 10-minute activity from 40% to 60%.
 - Week-four retention: increase the share of a signup cohort still logging an activity in week four from 30% to 40%.
@@ -30,6 +40,5 @@ Read this brief before editing. Make a branch named `pair/sergio-yu-kai`. Keep t
 ## Handoff — complete before submitting
 - Motivation hypothesis:
 - What changed:
-- Checks performed:
 - Known limitation:
 - Next step:
