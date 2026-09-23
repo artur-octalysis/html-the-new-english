@@ -19,6 +19,14 @@ function prompt(){ $('setup-prompt').textContent=`Help me join this workshop usi
 3. Check push permission. If needed, prepare my fork and keep the original repository as upstream. Explain the remotes.
 4. Create or resume pair/${selectedPair}. Read pairs/${selectedPair}/README.md. Work only in that pair folder.
 5. Show the local path and branch. If index.html is missing, wait for the presenter’s handout. Do not push yet.`;
+ $('handoff-prompt').textContent=`Help our pair, ${selectedPair}, submit our fitness tracker prototype. Update our README, commit, and open a pull request.
+
+1. Inspect the current branch, remotes, and local changes. Work on pair/${selectedPair}; preserve unrelated work.
+2. Update pairs/${selectedPair}/README.md with our motivation hypothesis, what changed, checks actually performed, known limitations, and the next step. Ask us for any missing information; do not invent test results.
+3. Test the prototype against the brief’s acceptance checks and review the diff. Fix issues within our pair folder.
+4. Stage and commit only our intended changes in pairs/${selectedPair}/. Push our pair branch to the appropriate remote; use our fork if we lack write access. Do not force-push.
+5. Open a pull request to artur-octalysis/html-the-new-english, targeting main. Explain the improvement and validation. If a PR already exists for this branch, update it instead. Return its link and check status. Leave merging to the presenter.`;
+ $('handoff-status').textContent='';
  $('terminal-commands').textContent=terminalCommands(selectedPair);
  $('sync-prompt').textContent=`I’m on pair/${selectedPair}. The presenter has merged the starter into the original repository’s main branch. Inspect my remotes and local changes first. Preserve my work, fetch main from artur-octalysis/html-the-new-english, then merge it into my current pair branch. Use upstream for a fork or origin for a direct clone. Do not reset or force-push. Confirm pairs/${selectedPair}/index.html exists and open it locally.`;
 }
@@ -40,6 +48,7 @@ for(const pair of manifest.pairs){const folder=document.createElement('details')
 if(realSession){Object.assign(realSession,manifest);if(stage!==manifest.stage){stage=manifest.stage;restoreConversation();}renderDraft();}setFolder(folderPath);}catch{status('Could not load repository files. Check your connection.');}}
 $('close-file').onclick=()=>$('reader-window').hidden=true;
 $('pair-select').onchange=()=>{selectedPair=$('pair-select').value;prompt();$('copy-status').textContent='';for(const folder of document.querySelectorAll('.pair-folder'))folder.open=folder.querySelector('summary').textContent===selectedPair+'/';};
+$('copy-handoff').onclick=async()=>{try{await navigator.clipboard.writeText($('handoff-prompt').textContent);$('handoff-status').textContent='Copied. Paste into your local AI coding session.';}catch{$('handoff-status').textContent='Select the prompt above and copy it manually.';}};
 $('copy-sync').onclick=async()=>{try{await navigator.clipboard.writeText($('sync-prompt').textContent);$('sync-status').textContent='Copied. Paste into your local AI coding session.';}catch{$('sync-status').textContent='Select and copy the prompt above.';}};
 const finalStep={prompt:'Put one copy of this screen in each pair’s folder, then push it to GitHub.',label:'Copy · push · merge',reply:'Copied the screen into all five pair folders and merged the validated handout into main. Each pair can now sync their local branch.'};
 const conversationSteps=[...steps,finalStep];
