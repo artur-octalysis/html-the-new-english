@@ -38,7 +38,7 @@ Read this brief before editing. Make a branch named `pair/fabio-han-fang`. Keep 
 - No secrets, external services, or real personal data.
 
 ## Handoff — complete before submitting
-- Motivation hypothesis:
-- What changed:
-- Known limitation:
-- Next step:
+- Motivation hypothesis: Core Drive 5 (Social Influence & Relatedness), used as company rather than comparison. Busy adults returning to movement stick with it when they don't feel alone, so a fictional walking buddy, Sam, who is also getting back into it, cheers each log. There is no leaderboard or ranking.
+- What changed: Added the Sam buddy card. After each valid log, Sam cheers ("You're back!" on the first log, then "I'm right here with you") and suggests a manageable next walk together (5–20 minutes). Pressing Enter now logs an activity, keyboard focus is clearly visible, and invalid minutes show a gentle message instead of failing silently.
+- Known limitation: Sam is scripted. The messages don't react to missed days, and nothing is saved after a page refresh.
+- Next step: Test whether a fictional buddy feels like real company, or whether inviting a real friend works better.
