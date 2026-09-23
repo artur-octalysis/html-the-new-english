@@ -28,7 +28,7 @@ li { margin-bottom: 8px; }</style></head><body><!-- APP HTML START --><main>
   <form id="activity-form" novalidate>
     <label>Activity <select name="activity"><option>Walk</option><option>Run</option></select></label>
     <label>Minutes <input name="minutes" type="number" min="1" max="300" step="1" value="10" required inputmode="numeric"></label>
-    <button type="submit" id="log-activity">Log my activity</button>
+    <button type="button" id="log-activity">Log my activity</button>
   </form>
   <div id="feedback" role="status"><p>Start with a moment of movement.</p></div>
   <ul id="activities" aria-label="Logged activities"></ul>
@@ -74,4 +74,17 @@ form.addEventListener('submit', event => {
   const next = Math.max(5, Math.min(minutes, 20));
   say([cheer(activity), 'Next: a ' + next + '-minute walk with Sam tomorrow?']);
   parent.postMessage({ source: 'move-starter', activity }, '*');
-});</script></body></html>
+});
+// Keep activity logging local: the gallery sandbox blocks native form submissions.
+const activityForm = document.getElementById('activity-form');
+const logActivityButton = document.getElementById('log-activity');
+logActivityButton.addEventListener('click', () => {
+  activityForm.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+});
+activityForm.elements.minutes.addEventListener('keydown', event => {
+  if (event.key === 'Enter') {
+    event.preventDefault();
+    logActivityButton.click();
+  }
+});
+</script></body></html>
