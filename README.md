@@ -40,7 +40,7 @@ Pair folders start with `README.md`; their `index.html` is distributed during th
 ## Facilitator preparation
 
 1. Share the live presentation, gallery, and contribution guide.
-2. Invite each pair’s driver as a collaborator, confirm they accepted, then have them complete the AI setup prompt and browser sign-in.
+2. Have each pair’s driver complete local setup and create their branch. Collect their GitHub usernames and invite them as collaborators; confirm acceptance before pushing.
 3. Confirm the five named folders in pairs/ and rehearse the handout workflow.
 4. Keep the Pull requests and Actions tabs open during the session.
 5. Review pair-branch pull requests and merge after checks pass.

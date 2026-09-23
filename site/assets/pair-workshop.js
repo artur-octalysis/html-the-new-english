@@ -18,7 +18,7 @@ First, ask me which local folder I want to keep the repository in, and wait for 
 
 1. Check Git and GitHub CLI (gh). Guide me through missing setup and GitHub browser sign-in; never ask for credentials in chat.
 2. Clone https://github.com/artur-octalysis/tog-learning into the destination I selected. If it already exists, inspect it and ask whether to reuse it if it is a clone of this repository, or choose another location; never overwrite existing files. Check my Git commit name and email.
-3. Use only the shared repository artur-octalysis/tog-learning. Never create or use a fork. Check my GitHub account has write access; if not, stop and ask the presenter to invite my GitHub username as a collaborator. Wait until I accept the invitation and verify write access before continuing.
+3. Use only the shared repository artur-octalysis/tog-learning. Never create or use a fork. Local cloning, branching, and editing do not require write access. If my GitHub account lacks write access, tell me to share my username with the presenter for a collaborator invitation, but continue local setup. Only pushing must wait until I accept the invitation and write access is verified.
 4. Create or resume pair/${selectedPair}. Read pairs/${selectedPair}/README.md. Work only in that pair folder.
 5. Show the local path and branch. If index.html is missing, wait for the presenter’s handout. Do not push yet.`;
  $('handoff-prompt').textContent=`Help our pair, ${selectedPair}, submit our fitness tracker prototype. Update our README, commit, and open a pull request.

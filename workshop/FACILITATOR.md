@@ -3,7 +3,7 @@
 ## Before the session
 Confirm everyone has a GitHub account and a local AI coding tool with terminal access. Git and GitHub CLI can be installed before the meeting. Browser authorization remains a participant action. Select a driver per pair. Use the copyable pair-specific setup prompt on the presentation.
 
-The public repository can be cloned without collaborator access. Invite drivers as collaborators and confirm they accept before the session. Everyone pushes pair branches to the shared repository; no forks. Missing write access means stop and request access. Check remotes before pushing. Do not put credentials in prompts.
+The public repository can be cloned without collaborator access. Collect each driver’s GitHub username during setup and invite them as collaborators; confirm acceptance before submission. Everyone pushes pair branches to the shared repository; no forks. Missing write access does not block local cloning, branching, or editing. Only pushing waits for access. Check remotes before pushing. Do not put credentials in prompts.
 
 ## Live build and real handout
 Open the public presentation and click **Sign in with GitHub** in the top navigation. Authorize the Octalysis HTML Workshop app as artur-octalysis. Other accounts cannot run the build. Allow the sign-in popup if the browser blocks it.
