@@ -2,8 +2,8 @@
 
 An interactive presentation and shared prototype gallery for The Octalysis Group. HTML, CSS, JavaScript, AI workflows, and practical ways to build on each other's work.
 
-- **Presentation:** https://artur-octalysis.github.io/html-the-new-english/
-- **Prototype gallery:** https://artur-octalysis.github.io/html-the-new-english/gallery.html
+- **Presentation:** https://artur-octalysis.github.io/tog-learning/
+- **Prototype gallery:** https://artur-octalysis.github.io/tog-learning/gallery.html
 - **Contribute:** [CONTRIBUTING.md](CONTRIBUTING.md)
 
 ## Present
@@ -16,7 +16,7 @@ For real file creation and publishing, Artur signs in with GitHub from the publi
 
 Build a prototype → contribute a folder through a pull request → validate and review → merge → automatic publishing → present from the gallery.
 
-Contributors can use their own AI tool and submit from a GitHub fork; no shared account or write permission is needed. The facilitator reviews and merges. No direct website upload or account creation is required.
+Contributors use their own AI tool and GitHub account, with collaborator write access to this repository. Work on your pair branch in the shared repository; do not create forks. The facilitator reviews and merges. No direct website upload or account creation is required.
 
 ## Repository structure
 
@@ -40,10 +40,10 @@ Pair folders start with `README.md`; their `index.html` is distributed during th
 ## Facilitator preparation
 
 1. Share the live presentation, gallery, and contribution guide.
-2. Have one driver per pair complete the AI setup prompt and browser sign-in.
+2. Have each pair’s driver complete local setup and create their branch. Collect their GitHub usernames and invite them as collaborators; confirm acceptance before pushing.
 3. Confirm the five named folders in pairs/ and rehearse the handout workflow.
 4. Keep the Pull requests and Actions tabs open during the session.
-5. Approve workflow runs from new fork contributors when GitHub requests it, review changes, and merge.
+5. Review pair-branch pull requests and merge after checks pass.
 6. Wait for publishing to finish before refreshing the gallery.
 
 Repository infrastructure changes should be reviewed by the maintainer. Prototype code is not executed by the build; it runs only when opened in the gallery's restricted viewer or visited directly.
