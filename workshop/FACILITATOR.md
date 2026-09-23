@@ -3,7 +3,7 @@
 ## Before the session
 Confirm everyone has a GitHub account and a local AI coding tool with terminal access. Git and GitHub CLI can be installed before the meeting. Browser authorization remains a participant action. Select a driver per pair. Use the copyable pair-specific setup prompt on the presentation.
 
-The public repository can be cloned without collaborator access. Drivers can contribute through their own forks; collaborators can push branches to the original repository. Check remotes before pushing. Do not put credentials in prompts. No participant invitations have been issued by this project.
+The public repository can be cloned without collaborator access. Collect each driver’s GitHub username during setup and invite them as collaborators; confirm acceptance before submission. Everyone pushes pair branches to the shared repository; no forks. Missing write access does not block local cloning, branching, or editing. Only pushing waits for access. Check remotes before pushing. Do not put credentials in prompts.
 
 ## Live build and real handout
 Open the public presentation and click **Sign in with GitHub** in the top navigation. Authorize the Octalysis HTML Workshop app as artur-octalysis. Other accounts cannot run the build. Allow the sign-in popup if the browser blocks it.
@@ -20,12 +20,12 @@ Local fallback: npm run build, then npm run present, then http://127.0.0.1:8768/
 
 Double-click index.html in the folder to open the mobile-width browser window. Markdown opens in its own formatted reader. Folder, reader and browser can coexist, close and reopen independently, and be dragged by their title bars. Enter opens selected icons/files; touch uses a single tap. The folder path bar shows the subset being viewed: pairs/.
 
-The next chapter supplies a pair-specific sync prompt. Participants inspect their remotes and local changes, then fetch the original repository’s main and merge it into their current pair branch. A fork usually uses upstream/main; a direct clone usually uses origin/main. Never force-reset participant work. Confirm pairs/<pair>/index.html exists before practice.
+The next chapter supplies a pair-specific sync prompt. Participants inspect their remotes and local changes, then fetch the original repository’s main and merge it into their current pair branch. Verify origin points to artur-octalysis/tog-learning, then use origin/main. Never force-reset participant work. Confirm pairs/<pair>/index.html exists before practice.
 
 The older Prepare pair handout Actions workflow remains available as an alternative for distributing the canonical starter. Use one handout route only.
 
 ## Twelve-minute practice
-One driver writes; the navigator tests. Swap halfway. Scope edits to your assigned pairs/<pair>/ folder. Open index.html locally. Complete the README handoff, then open a PR against the original repository's main branch. First-time fork workflows may need maintainer approval. Pair previews appear in the gallery only after an index.html exists and its merge has deployed.
+One driver writes; the navigator tests. Swap halfway. Scope edits to your assigned pairs/<pair>/ folder. Open index.html locally. Complete the README handoff, then open a PR against the original repository's main branch.  Pair previews appear in the gallery only after an index.html exists and its merge has deployed.
 
 ## A real conflict, prepared deliberately
 Use one consenting pair's index.html after the starter handout exists. The main presenter and the pair create separate branches from the SAME main commit. Both change the text on the SAME h1 line, with no other edits needed.

@@ -6,7 +6,7 @@ Before connecting, explain the team value: a shared, versioned home for context,
 
 2. Connect: pair selector and Codex / Claude Code vs Terminal Commands tabs. Both snippets follow the selected pair. Read the pair brief in the folder window.
 3. Build together: one chat with four prepared prompts. Run creates HTML, adds CSS, applies JavaScript, then copies the finished file to the five pair folders and publishes.
-4. Sync your local branch: copy a pair-specific AI prompt; explain fetch and merge for direct clones and forks.
+4. Sync your local branch: copy a pair-specific AI prompt; explain fetch and merge for branches in the shared repository.
 5. Twelve-minute pair practice.
 6. Branch, diff, review and merge visuals on the slide, synchronized with the GitHub companion window. A second tab provides an interactive conflict rehearsal.
 8. Deployment: local files, shared source, and published releases; frontend vs backend deployments.
