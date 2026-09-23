@@ -66,3 +66,20 @@
 .fold .content>:not(#desktop){opacity:var(--fold-opacity,1)}
 @media(prefers-reduced-motion:reduce){.fold .content>:not(#desktop){opacity:1!important}}
 @media print{.fold .content>:not(#desktop){opacity:1!important}}
+
+/* The app drives the workflow; the connected timeline reflects its progress. */
+.git-timeline{list-style:none;display:grid;grid-template-columns:repeat(8,minmax(0,1fr));padding:0;margin:28px 0;gap:0}
+.git-timeline li{position:relative;text-align:center;color:#657b9a;font-size:11px;line-height:1.35;padding:0 3px}
+.git-timeline li::before{content:"";position:absolute;top:16px;left:-50%;width:100%;height:2px;background:#cbdcf0;z-index:0}
+.git-timeline li:first-child::before{display:none}
+.git-timeline li>span{display:grid;place-items:center;position:relative;margin:0 auto 10px;width:34px;height:34px;border-radius:50%;background:#f7faff;border:2px solid #cbdcf0;font-weight:700}
+.git-timeline li strong{font-weight:600;display:block}
+.git-timeline .is-complete::before,.git-timeline .is-current::before{background:#005cc2}
+.git-timeline .is-complete>span{background:#005cc2;border-color:#005cc2;color:white}
+.git-timeline .is-current>span{border-color:#005cc2;background:white;color:#00428f;box-shadow:0 0 0 5px #a6e3ff66}
+.git-timeline .is-current{color:#00428f}
+.github-workflow-actions{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin:24px 0 8px}
+.deploy-route li{position:relative;padding-right:88px}
+.deploy-icon{position:absolute;right:24px;top:28px;color:#005cc2}
+.deploy-icon svg{width:40px;height:40px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+@media(max-width:600px){.git-timeline li{font-size:9px}.git-timeline li>span{width:28px;height:28px}.git-timeline li::before{top:13px}}
