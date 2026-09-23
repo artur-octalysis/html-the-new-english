@@ -24,7 +24,7 @@ First, ask me which local folder I want to keep the repository in, and wait for 
  $('handoff-prompt').textContent=`Help our pair, ${selectedPair}, submit our fitness tracker prototype. Update our README, commit, and open a pull request.
 
 1. Inspect the current branch, remotes, and local changes. Work on pair/${selectedPair}; preserve unrelated work.
-2. Update pairs/${selectedPair}/README.md with our motivation hypothesis, what changed, checks actually performed, known limitations, and the next step. Ask us for any missing information; do not invent test results.
+2. Update pairs/${selectedPair}/README.md with our motivation hypothesis, what changed, known limitations, and the next step. Ask us for any missing information; do not invent outcomes.
 3. Test the prototype against the brief’s acceptance checks and review the diff. Fix issues within our pair folder.
 4. Stage and commit only our intended changes in pairs/${selectedPair}/. Verify origin points to artur-octalysis/tog-learning and push our pair branch there. Never create or use a fork. If write access is missing, stop and ask the presenter for collaborator access. Do not force-push.
 5. Open a pull request to artur-octalysis/tog-learning, targeting main. Explain the improvement and validation. If a PR already exists for this branch, update it instead. Return its link and check status. Leave merging to the presenter.`;
