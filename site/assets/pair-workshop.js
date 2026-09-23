@@ -138,7 +138,7 @@ function updateFoldFades(){
   const rect=fold.getBoundingClientRect();
   const enter=smooth((height*.72-rect.top)/(height*.55));
   const leave=smooth((rect.bottom-height*1.04)/(height*.48));
-  const opacity=reduced||fold===folds.at(-1)?1:Math.min(enter,leave);
+  const opacity=reduced?1:Math.min(enter,fold===folds.at(-1)?1:leave);
   fold.style.setProperty('--fold-opacity',opacity.toFixed(3));
   fold.style.setProperty('--fold-blur',((1-opacity)*16).toFixed(2)+'px');
   fold.style.setProperty('--stage-top',Math.min(0,height-stageHeight)+'px');
