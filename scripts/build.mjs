@@ -44,7 +44,8 @@ export async function build(projectRoot=root){
     const dir=join(source,entry.name);
     for(const name of ['index.html','prototype.json','README.md'])if(!(await lstat(join(dir,name))).isFile())throw Error(`${entry.name}: missing ${name}`);
     const size=await validateFiles(dir);if(size>25*1024*1024)throw Error(`${entry.name}: prototype exceeds 25 MB`);
-    manifest.push(validateMetadata(JSON.parse(await readFile(join(dir,'prototype.json'),'utf8')),entry.name));
+    const item=validateMetadata(JSON.parse(await readFile(join(dir,'prototype.json'),'utf8')),entry.name);
+    if(item.kind!=='example')manifest.push(item);
   }
   await validateFiles(join(projectRoot,'site'));
   const dist=join(projectRoot,'dist');await rm(dist,{recursive:true,force:true});await mkdir(dist,{recursive:true});

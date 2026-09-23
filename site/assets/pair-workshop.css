@@ -35,3 +35,7 @@
 @media(min-width:1500px){#browser-window{width:350px;top:0}}
 @media(min-width:801px) and (max-width:1190px){#browser-window{width:285px;top:0}nav{gap:10px}header{padding:0 20px}.nav-account{gap:8px}#chapter-count{display:none}}
 @media(max-width:800px){#browser-window{height:calc(100dvh - 95px);min-height:440px;width:min(100%,350px)}#reader-window{position:relative;inset:auto!important;width:100%;height:calc(100dvh - 95px);min-height:420px;margin:18px 0}.reader-content{padding:20px}.signin-button{font-size:10px;padding:8px 10px}.nav-account{gap:6px}#chapter-count{display:none}.desktop-tip{font-size:0}}
+
+/* Visible from the opening, with a taller conversation area. */
+.desktop-icons{justify-content:flex-end;height:110px;padding:8px 12px;gap:20px}.desktop-icon{width:96px;font-size:12px;gap:10px}.desktop-icon svg{width:48px;height:48px}.chat-messages{height:clamp(320px,48vh,540px)}.chat-welcome{padding:100px 10px}.chat-message p{font-size:14px}.chat-heading strong{font-size:15px}.chat-heading div>span{font-size:12px}.chat-composer textarea{height:76px;min-height:76px}
+@media(max-width:800px){#desktop{min-height:110px}.chat-messages{height:clamp(300px,48dvh,480px)}#opening .content{width:100%}.desktop-icons{height:110px}.desktop-icon svg{width:48px;height:48px}}
