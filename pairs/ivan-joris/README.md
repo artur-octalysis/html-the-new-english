@@ -38,7 +38,7 @@ Read this brief before editing. Make a branch named `pair/ivan-joris`. Keep the 
 - No secrets, external services, or real personal data.
 
 ## Handoff — complete before submitting
-- Motivation hypothesis:
-- What changed:
-- Known limitation:
-- Next step:
+- Motivation hypothesis: CD3 — choosing an earned color scheme gives busy returners a small opportunity for self-expression and immediate visual feedback. The unlock also provides an achievement cue.
+- What changed: Ten cumulative logged minutes unlock Forest Mint. Users choose when to apply it and can switch back to Ocean Blue. Progress and unlock feedback appear beside the color choices.
+- Known limitation: Activities, unlocks, and color choice are stored only in memory and reset on refresh. One unlock is available; the audience impact is untested.
+- Next step: Ask a partner to log two short activities, unlock the color, and explain whether customization makes the app feel more personal.

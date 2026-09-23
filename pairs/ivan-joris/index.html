@@ -1,5 +1,7 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Every move counts</title><style id="app-css">* { box-sizing: border-box; }
-body { margin: 0; padding: 24px; background: #f2f7fc; color: #0e2a6e; font-family: system-ui, sans-serif; }
+:root { --page: #f2f7fc; --ink: #0e2a6e; --accent: #005cc2; --soft: #e7f1ff; }
+body[data-theme="mint"] { --page: #edf8f2; --ink: #163f34; --accent: #187450; --soft: #d8f0e2; }
+body { margin: 0; padding: 24px; background: var(--page); color: var(--ink); font-family: system-ui, sans-serif; }
 main { max-width: 420px; margin: auto; }
 h1 { font-size: 36px; line-height: 1.1; }
 .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
@@ -8,9 +10,27 @@ strong { font-size: 28px; display: block; }
 form { display: flex; flex-direction: column; gap: 12px; }
 label { display: grid; gap: 6px; }
 input, select, button { font: inherit; padding: 12px; border: 1px solid #b7cfe5; border-radius: 8px; }
-button { background: #005cc2; color: white; cursor: pointer; }
+button { background: var(--accent); color: white; cursor: pointer; }
 ul { list-style: none; padding: 0; }
-li { margin-bottom: 8px; }</style></head><body><!-- APP HTML START --><main>
+li { margin-bottom: 8px; }
+body, button { transition: background-color .35s ease, color .35s ease; }
+.theme-reward { margin-top: 24px; padding: 22px; background: white; border: 1px solid var(--soft); border-radius: 20px; }
+.theme-reward h2 { margin: 6px 0 10px; font-size: 22px; }
+.reward-label { margin: 0; font-size: 11px; font-weight: 700; letter-spacing: .12em; color: var(--accent); }
+.theme-reward p { line-height: 1.5; }
+progress { width: 100%; height: 8px; accent-color: var(--accent); }
+.theme-options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 16px; }
+.theme-option { display: flex; align-items: center; gap: 9px; background: white; color: var(--ink); text-align: left; border: 2px solid #d5dfe8; }
+.theme-option[aria-pressed="true"] { border-color: var(--accent); background: var(--soft); }
+.theme-option:disabled { opacity: .55; cursor: not-allowed; }
+.theme-option small { display: block; font-size: 11px; margin-top: 3px; }
+.swatch { width: 22px; height: 22px; border-radius: 50%; flex-shrink: 0; }
+.swatch.blue { background: #005cc2; }.swatch.mint { background: #187450; }
+button:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+.theme-reward.unlocked { animation: unlock .65s ease; }
+@keyframes unlock { 50% { box-shadow: 0 0 0 7px var(--soft); } }
+@media(prefers-reduced-motion:reduce) { body, button { transition: none; }.theme-reward.unlocked { animation: none; } }
+</style></head><body><!-- APP HTML START --><main>
   <p>MOVE / YOUR DAILY MOMENTUM</p>
   <h1>Every move counts.</h1>
   <p>A little movement. A little more you.</p>
@@ -21,23 +41,56 @@ li { margin-bottom: 8px; }</style></head><body><!-- APP HTML START --><main>
   <form id="activity-form">
     <label>Activity <select name="activity"><option>Walk</option><option>Run</option></select></label>
     <label>Minutes <input name="minutes" type="number" min="1" max="300" step="1" value="10" required></label>
-    <button type="button" id="log-activity">Log my activity</button>
+    <button type="submit" id="log-activity">Log my activity</button>
   </form>
   <p id="feedback" role="status">Start with a moment of movement.</p>
+  <section class="theme-reward" id="theme-reward" aria-labelledby="theme-heading">
+    <p class="reward-label">YOUR MOVEMENT. YOUR STYLE.</p>
+    <h2 id="theme-heading">Make this space yours.</h2>
+    <p id="unlock-status" role="status">Log 10 minutes in total to unlock Forest Mint.</p>
+    <progress id="color-progress" max="10" value="0" aria-label="Minutes toward your new color"></progress>
+    <div class="theme-options" role="group" aria-label="App color scheme">
+      <button type="button" class="theme-option" data-color="blue" aria-pressed="true"><span class="swatch blue" aria-hidden="true"></span><span>Ocean Blue<small>Original</small></span></button>
+      <button type="button" class="theme-option" data-color="mint" aria-pressed="false" disabled><span class="swatch mint" aria-hidden="true"></span><span>Forest Mint<small id="mint-state">Locked · 10 min</small></span></button>
+    </div>
+    <p id="theme-status" role="status" class="reward-label"></p>
+  </section>
   <ul id="activities" aria-label="Logged activities"></ul>
 </main><!-- APP HTML END --><script id="app-js">const activities = [];
-document.getElementById('log-activity').addEventListener('click', () => {
+let mintUnlocked = false;
+document.getElementById('activity-form').addEventListener('submit', event => {
+  event.preventDefault();
   const form = document.getElementById('activity-form');
   if (!form.reportValidity()) return;
   const minutes = Number(form.elements.minutes.value);
   if (!Number.isInteger(minutes) || minutes < 1 || minutes > 300) return;
   const activity = { type: form.elements.activity.value, minutes };
   activities.push(activity);
-  document.getElementById('minutes').textContent = activities.reduce((sum, item) => sum + item.minutes, 0);
+  const total = activities.reduce((sum, item) => sum + item.minutes, 0);
+  document.getElementById('minutes').textContent = total;
+  document.getElementById('color-progress').value = Math.min(total, 10);
+  if (!mintUnlocked && total >= 10) {
+    mintUnlocked = true;
+    document.querySelector('[data-color="mint"]').disabled = false;
+    document.getElementById('mint-state').textContent = 'Unlocked';
+    document.getElementById('unlock-status').textContent = 'You earned Forest Mint! Choose it below to make the app your own.';
+    document.getElementById('theme-reward').classList.add('unlocked');
+  } else if (!mintUnlocked) {
+    document.getElementById('unlock-status').textContent = (10 - total) + ' more minutes to unlock Forest Mint. Every little bit counts.';
+  }
   document.getElementById('sessions').textContent = activities.length;
   const row = document.createElement('li');
   row.textContent = activity.type + ' · ' + minutes + ' minutes';
   document.getElementById('activities').prepend(row);
   document.getElementById('feedback').textContent = 'You made time for yourself. Nice work!';
   parent.postMessage({ source: 'move-starter', activity }, '*');
-});</script></body></html>
+});
+for (const button of document.querySelectorAll('[data-color]')) {
+  button.addEventListener('click', () => {
+    if (button.dataset.color === 'mint' && !mintUnlocked) return;
+    document.body.dataset.theme = button.dataset.color;
+    for (const option of document.querySelectorAll('[data-color]')) option.setAttribute('aria-pressed', String(option === button));
+    document.getElementById('theme-status').textContent = (button.dataset.color === 'mint' ? 'Forest Mint' : 'Ocean Blue') + ' applied. Switch whenever you like.';
+  });
+}
+</script></body></html>
