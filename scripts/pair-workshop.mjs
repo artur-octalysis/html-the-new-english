@@ -3,6 +3,9 @@ import {join} from 'node:path';
 export async function publishPairs(root, dist, validateFiles, manifest) {
   if(!(await readdir(root)).includes('workshop'))return;
   const pairs=JSON.parse(await readFile(join(root,'workshop/pairs.json'),'utf8'));
+  let live=null;
+  try{live=await readFile(join(root,'workshop/live/index.html'),'utf8');}catch(error){if(error.code!=='ENOENT')throw error;}
+  if(live)manifest.unshift({id:'live-build',team:'Built together · The Octalysis Group',title:'Every move counts',description:'The fitness tracker we created together: HTML, CSS, then JavaScript.',coreDrive:'Our shared starting point.',kind:'live',path:'workshop/live/index.html',sourcePath:'workshop/live'});
   const files=[];
   for(const pair of pairs){
     if(!/^[a-z]+(?:-[a-z]+)*$/.test(pair.id))throw Error('Invalid pair id');
@@ -14,7 +17,7 @@ export async function publishPairs(root, dist, validateFiles, manifest) {
     async function walk(folder,prefix){for(const e of await readdir(folder,{withFileTypes:true})){const path=prefix+'/'+e.name;if(e.isDirectory())await walk(join(folder,e.name),path);else paths.push(path);}}
     await walk(dir,`pairs/${pair.id}`);
     files.push({...pair,files:paths});
-    if(paths.includes(`pairs/${pair.id}/index.html`))manifest.push({id:pair.id,team:pair.team,title:pair.team+' · Move',description:'A fitness experience built in the workshop.',coreDrive:'Read the pair brief for the motivation hypothesis.',kind:'team',path:`pairs/${pair.id}/index.html`,sourcePath:`pairs/${pair.id}`});
+    if(paths.includes(`pairs/${pair.id}/index.html`)&&(!live||(await readFile(join(dir,'index.html'),'utf8')).trim()!==live.trim()))manifest.push({id:pair.id,team:pair.team,title:pair.team+' · Move',description:'A fitness experience built in the workshop.',coreDrive:'Read the pair brief for the motivation hypothesis.',kind:'team',path:`pairs/${pair.id}/index.html`,sourcePath:`pairs/${pair.id}`});
   }
   await validateFiles(join(root,'workshop'));
   await cp(join(root,'pairs'),join(dist,'pairs'),{recursive:true});

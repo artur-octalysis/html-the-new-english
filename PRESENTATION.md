@@ -1,7 +1,7 @@
 # Build together: Is HTML the new English?
 
 ## Presentation flow
-1. Cover; the desktop is hidden.
+1. Cover; the larger desktop icons are visible at the top right.
 2. Connect: pair selector and Codex / Claude Code vs Terminal Commands tabs. Both snippets follow the selected pair. Read the pair brief in the folder window.
 3. Build together: one chat with four prepared prompts. Run creates HTML, adds CSS, applies JavaScript, then copies the finished file to the five pair folders and publishes.
 4. Sync your local branch: copy a pair-specific AI prompt; explain fetch and merge for direct clones and forks.
@@ -19,7 +19,7 @@ Open the public presentation and use **Sign in with GitHub** in the top navigati
 
 The chat uses prepared code rather than calling an LLM. The first three Run clicks commit workshop/live/index.html on workshop/hosted-presenter. The fourth copies it into the five pair folders and the canonical starter, opens a pull request, waits for Validate and build on that exact revision, then requests a squash merge. Existing pair index.html files are never overwritten. Pages deploys after merge.
 
-Sign-in uses OAuth with PKCE and a short-lived encrypted session held in browser memory. Reloading requires signing in again; the draft survives in GitHub. Public visitors read the published snapshot. The signed-in viewer follows the working branch, then main after publication. Both refresh files periodically.
+Sign-in uses OAuth with PKCE and a short-lived encrypted session held in browser memory. Reloading requires signing in again; the draft survives in GitHub. Public visitors read the published snapshot. The signed-in viewer follows the working branch, then main after publication. Both refresh files periodically. The gallery lists the live-built screen first, excludes unchanged handout copies, and checks for newly published pair versions every 15 seconds.
 
 For a local fallback, run npm run build and npm run present, then open http://127.0.0.1:8768/. This separate path uses the facilitator’s GitHub CLI session and an isolated temporary worktree.
 

@@ -10,6 +10,9 @@ test('staged HTML exports progressively add CSS and JS; commands reject injected
 test('real Git workspace isolates live writes, distributes exact copies, and safely resumes failed publication',async t=>{
  const base=await mkdtemp(join(tmpdir(),'presenter-test-'));t.after(()=>rm(base,{recursive:true,force:true}));const root=join(base,'source');await mkdir(root);
  for(const folder of ['site','scripts','workshop','pairs','prototypes'])await cp(resolve(folder),join(root,folder),{recursive:true});
+ // Start with an undistributed fixture regardless of the real workshop state.
+ await rm(join(root,'workshop/live'),{recursive:true,force:true});
+ for(const pair of JSON.parse(await readFile(join(root,'workshop/pairs.json'),'utf8')))await rm(join(root,'pairs',pair.id,'index.html'),{force:true});
  await writeFile(join(root,'package.json'),'{"type":"module"}');
  await command('git',['init','--initial-branch=main'],root);await command('git',['config','user.name','Workshop Test'],root);await command('git',['config','user.email','workshop@example.test'],root);await command('git',['add','.'],root);await command('git',['commit','-m','Fixture'],root);await command('git',['remote','add','origin',root],root);
  let attempts=0;const workspace=new PresenterWorkspace({root,sources,publish:async()=>{attempts++;if(attempts===1)throw Error('Network interrupted');return {pullRequest:'https://example.test/pr/1'};}});
