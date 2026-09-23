@@ -105,7 +105,6 @@
 .focus-scroll .fold-stage{position:sticky;top:var(--stage-top,0px);min-height:100svh;padding:140px 4vw 80px;display:flex;align-items:center;transform:translateY(var(--reveal-offset,0px))}
 .focus-scroll #architecture .fold-stage{padding-top:110px;padding-bottom:40px}
 .focus-scroll .fold:last-child{padding-bottom:0!important}
-.focus-scroll .fold:last-child .content>*{opacity:1;filter:none}
 @media(max-width:800px){.focus-scroll .fold-stage{padding:110px 5vw 55px}}
 @media(prefers-reduced-motion:reduce){.fold .content>:not(#desktop){filter:none!important}.fold-stage{transform:none!important}}
 @media print{.focus-scroll .fold{padding:20px!important}.focus-scroll .fold-stage{position:static;min-height:0;padding:0;transform:none}.fold .content>:not(#desktop){filter:none!important}}
