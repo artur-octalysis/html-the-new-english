@@ -16,7 +16,7 @@ For real file creation and publishing, Artur signs in with GitHub from the publi
 
 Build a prototype → contribute a folder through a pull request → validate and review → merge → automatic publishing → present from the gallery.
 
-Contributors can use their own AI tool and submit from a GitHub fork; no shared account or write permission is needed. The facilitator reviews and merges. No direct website upload or account creation is required.
+Contributors use their own AI tool and GitHub account, with collaborator write access to this repository. Work on your pair branch in the shared repository; do not create forks. The facilitator reviews and merges. No direct website upload or account creation is required.
 
 ## Repository structure
 
@@ -40,10 +40,10 @@ Pair folders start with `README.md`; their `index.html` is distributed during th
 ## Facilitator preparation
 
 1. Share the live presentation, gallery, and contribution guide.
-2. Have one driver per pair complete the AI setup prompt and browser sign-in.
+2. Invite each pair’s driver as a collaborator, confirm they accepted, then have them complete the AI setup prompt and browser sign-in.
 3. Confirm the five named folders in pairs/ and rehearse the handout workflow.
 4. Keep the Pull requests and Actions tabs open during the session.
-5. Approve workflow runs from new fork contributors when GitHub requests it, review changes, and merge.
+5. Review pair-branch pull requests and merge after checks pass.
 6. Wait for publishing to finish before refreshing the gallery.
 
 Repository infrastructure changes should be reviewed by the maintainer. Prototype code is not executed by the build; it runs only when opened in the gallery's restricted viewer or visited directly.

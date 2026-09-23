@@ -9,7 +9,7 @@ Select your pair on the presentation's Connect chapter. Copy its prompt into a l
 - pairs/myrte-rob/
 - pairs/sergio-yu-kai/
 
-Read your README.md first. Wait for the presenter to distribute index.html, then fetch the original repository's main and merge it into your pair branch. Your AI should inspect remotes and local changes before syncing. Cloning does not grant push permission: contributors without write access use a personal fork, with the original repository as upstream.
+Read your README.md first. Wait for the presenter to distribute index.html, then fetch the original repository's main and merge it into your pair branch. Your AI should inspect remotes and local changes before syncing. Cloning does not grant push permission. Ask the presenter for collaborator access and accept the invitation before pushing. Use a pair branch in artur-octalysis/tog-learning; never create or use a fork. If access is missing, stop and request it.
 
 Build only within your pair folder. Use one driver to submit the work. Test valid and invalid activity entries, mobile width, keyboard controls and feedback. Update your README with the motivation hypothesis, changes, checks and limitations. Inspect the diff, commit, push your branch and open a PR against artur-octalysis/tog-learning main. The facilitator reviews and merges; Pages publishes after successful validation. Never force-push main.
 
