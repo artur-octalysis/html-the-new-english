@@ -1,5 +1,5 @@
 export const steps = [
- {prompt:'Create an HTML file for a fitness tracker page.',label:'HTML · structure',reply:'Created index.html with a heading, activity form and progress totals. Double-click the file to open it in the browser.'},
+ {prompt:'Create an HTML file for a fitness tracker page.',label:'HTML · structure',reply:'Created index.html with a heading, activity form and progress totals. Double-click the Browser icon to try the live screen.'},
  {prompt:'Add CSS.',label:'CSS · layout and color',reply:'Updated index.html. Grid arranges the totals; flexbox structures the form. Spacing and color give the screen a clear hierarchy.'},
  {prompt:'Apply JS.',label:'JavaScript · interaction',reply:'Updated index.html with JavaScript. Log a walk or run: the activity list, totals and feedback now respond.'}
 ];
