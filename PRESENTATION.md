@@ -18,7 +18,7 @@ Allow 45–60 minutes, including 12 minutes of pair practice and 5 minutes of sh
 ## Hosted presenter workspace
 Open the public presentation and use **Sign in with GitHub** in the top navigation. Only the configured presenter, Artur, can perform writes. The GitHub App is installed on this repository only. The backend is https://html-workshop-api.vercel.app/api/workshop.
 
-The chat uses prepared code rather than calling an LLM. The first three Run clicks commit workshop/live/index.html on workshop/hosted-presenter. The fourth copies it into the five pair folders and the canonical starter, opens a pull request, waits for Validate and build on that exact revision, then requests a squash merge. Existing pair index.html files are never overwritten. Pages deploys after merge.
+The chat uses prepared code rather than calling an LLM. The first three Run clicks commit workshop/live/index.html on the configured presenter branch (WORKSHOP_BRANCH). The fourth copies it into the five pair folders and the canonical starter, opens a pull request, waits for Validate and build on that exact revision, then requests a squash merge. Existing pair index.html files are never overwritten. Pages deploys after merge.
 
 Sign-in uses OAuth with PKCE and a short-lived encrypted session held in browser memory. Reloading requires signing in again; the draft survives in GitHub. Public visitors read the published snapshot. The signed-in viewer follows the working branch, then main after publication. Both refresh files periodically. The gallery lists the live-built screen first, excludes unchanged handout copies, and checks for newly published pair versions every 15 seconds.
 
