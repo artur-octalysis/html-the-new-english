@@ -6,7 +6,8 @@
   "scripts": {
     "build": "node scripts/build.mjs",
     "test": "node --test scripts/*.test.mjs",
-    "prebuild": "node scripts/sync-fitness-starter.mjs"
+    "prebuild": "node scripts/sync-fitness-starter.mjs",
+    "present": "node scripts/presenter-server.mjs"
   },
   "engines": {
     "node": ">=22"
