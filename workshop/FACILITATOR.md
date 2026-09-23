@@ -9,7 +9,7 @@ The public repository can be cloned without collaborator access. Drivers can con
 Open the public presentation and click **Sign in with GitHub** in the top navigation. Authorize the Octalysis HTML Workshop app as artur-octalysis. Other accounts cannot run the build. Allow the sign-in popup if the browser blocks it.
 
 The chat is a prepared teaching sequence, not a remote AI model. Each Run changes a real file:
-1. Commit workshop/live/index.html on workshop/hosted-presenter.
+1. Commit workshop/live/index.html on the configured presenter branch (WORKSHOP_BRANCH).
 2. Commit CSS to the same file.
 3. Commit JavaScript to the same file.
 4. Copy into every pair folder and the canonical starter, open a PR, wait for validation on its exact head, and merge. Do not run this final prompt early in rehearsal.

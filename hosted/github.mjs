@@ -1,7 +1,7 @@
 import {buildDocument} from '../site/assets/chat-build-model.js';
 import {allowedPath} from './security.mjs';
 export const REPO='artur-octalysis/html-the-new-english';
-export const BRANCH='workshop/hosted-presenter';
+export const BRANCH=process.env.WORKSHOP_BRANCH||'workshop/hosted-presenter';
 export const STATE='workshop/live/session.json';
 const root='/repos/'+REPO;
 export class GitHubWorkspace{
