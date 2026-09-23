@@ -10,7 +10,7 @@ An interactive presentation and shared prototype gallery for The Octalysis Group
 
 Scroll or use left/right arrow keys. Connect with pair-specific AI prompts or terminal commands. A desktop-style folder and browser coexist on the right. The Build Together chat creates HTML, adds CSS and JS, then copies the real screen to each pair and publishes it. The next chapter teaches how to sync the local pair branch with main.
 
-For real file creation and pushing, use the local presenter workspace: `npm run build`, then `npm run present`, then open http://127.0.0.1:8768/ . It uses the facilitator’s GitHub CLI sign-in. The public site is read-only. Chat code is prepared; Git operations are real. See [PRESENTATION.md](PRESENTATION.md) and [the facilitator guide](workshop/FACILITATOR.md).
+For real file creation and publishing, Artur signs in with GitHub from the public presentation’s navigation bar. A dedicated GitHub App and hosted service commit the draft and publish the handout. Other visitors can read the published files. Chat code is prepared; Git operations are real. See [PRESENTATION.md](PRESENTATION.md) and [the facilitator guide](workshop/FACILITATOR.md).
 
 ## The shared workflow
 
@@ -58,4 +58,4 @@ npm run build
 python3 -m http.server 8000 --directory dist
 ```
 
-GitHub Pages serves the public static site. Real repository writes run through the local presenter service using the facilitator’s GitHub CLI session. The activity database remains an in-memory teaching demonstration.
+GitHub Pages serves the public static site. Real repository writes run through the hosted service using the presenter’s GitHub App authorization. The activity database remains an in-memory teaching demonstration.

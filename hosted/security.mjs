@@ -1,0 +1,6 @@
+import {randomBytes,createCipheriv,createDecipheriv,createHash} from 'node:crypto';
+export function seal(payload,key){const iv=randomBytes(12),cipher=createCipheriv('aes-256-gcm',Buffer.from(key,'hex'),iv);const data=Buffer.concat([cipher.update(JSON.stringify(payload)),cipher.final()]);return Buffer.concat([iv,cipher.getAuthTag(),data]).toString('base64url');}
+export function unseal(value,key,purpose){try{const raw=Buffer.from(value,'base64url');if(raw.length<30)throw Error();const cipher=createDecipheriv('aes-256-gcm',Buffer.from(key,'hex'),raw.subarray(0,12));cipher.setAuthTag(raw.subarray(12,28));const data=JSON.parse(Buffer.concat([cipher.update(raw.subarray(28)),cipher.final()]).toString());if(data.purpose!==purpose||!Number.isFinite(data.exp)||data.exp<Date.now())throw Error();return data;}catch{throw Object.assign(Error('Your sign-in expired. Sign in again.'),{status:401});}}
+export const random=()=>randomBytes(32).toString('base64url');
+export const challenge=value=>createHash('sha256').update(value).digest('base64url');
+export function allowedPath(path){return typeof path==='string'&&!path.includes('..')&&/^(pairs\/[a-z]+(?:-[a-z]+)*\/(?:[a-zA-Z0-9_-]+\/)*[a-zA-Z0-9_.-]+|workshop\/live\/index\.html)$/.test(path);}
