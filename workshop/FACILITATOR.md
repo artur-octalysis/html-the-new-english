@@ -18,7 +18,7 @@ The handout refuses to overwrite existing pair index.html files. Drafts remain i
 
 Local fallback: npm run build, then npm run present, then http://127.0.0.1:8768/. This uses GitHub CLI and an isolated temporary worktree. Use only one handout route.
 
-Double-click index.html in the folder to open the mobile-width browser window. Markdown opens in its own formatted reader. Folder, reader and browser can coexist, close and reopen independently, and be dragged by their title bars. Enter opens selected icons/files; touch uses a single tap. The folder path bar shows the subset being viewed: pairs/ or workshop/live/.
+Double-click index.html in the folder to open the mobile-width browser window. Markdown opens in its own formatted reader. Folder, reader and browser can coexist, close and reopen independently, and be dragged by their title bars. Enter opens selected icons/files; touch uses a single tap. The folder path bar shows the subset being viewed: pairs/.
 
 The next chapter supplies a pair-specific sync prompt. Participants inspect their remotes and local changes, then fetch the original repository’s main and merge it into their current pair branch. A fork usually uses upstream/main; a direct clone usually uses origin/main. Never force-reset participant work. Confirm pairs/<pair>/index.html exists before practice.
 
