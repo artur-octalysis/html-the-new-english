@@ -1,43 +1,143 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Every move counts</title><style id="app-css">* { box-sizing: border-box; }
-body { margin: 0; padding: 24px; background: #f2f7fc; color: #0e2a6e; font-family: system-ui, sans-serif; }
+body { margin: 0; padding: 24px 16px; background: #f2f7fc; color: #0e2a6e; font-family: system-ui, sans-serif; }
 main { max-width: 420px; margin: auto; }
 h1 { font-size: 36px; line-height: 1.1; }
+h2 { font-size: 18px; margin: 0 0 12px; }
 .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.stats p, form, li { background: white; padding: 16px; border-radius: 16px; }
+.stats p, form, li, .card { background: white; padding: 16px; border-radius: 16px; }
+.card { margin: 12px 0; }
 strong { font-size: 28px; display: block; }
-form { display: flex; flex-direction: column; gap: 12px; }
+form { display: flex; flex-direction: column; gap: 12px; margin: 12px 0; }
 label { display: grid; gap: 6px; }
 input, select, button { font: inherit; padding: 12px; border: 1px solid #b7cfe5; border-radius: 8px; }
 button { background: #005cc2; color: white; cursor: pointer; }
+button:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid #f5a623; outline-offset: 2px; }
+fieldset { border: 0; padding: 0; margin: 0; }
+legend { padding: 0; margin-bottom: 6px; }
+.quick { display: flex; flex-wrap: wrap; gap: 8px; }
+.quick button { flex: 1 1 60px; background: #e6f0fb; color: #0e2a6e; }
+progress { width: 100%; height: 14px; accent-color: #005cc2; }
+.bar { display: grid; grid-template-columns: 84px 1fr 56px; gap: 8px; align-items: center; margin-bottom: 8px; font-size: 14px; }
+.bar span:last-child { text-align: right; }
 ul { list-style: none; padding: 0; }
-li { margin-bottom: 8px; }</style></head><body><!-- APP HTML START --><main>
+li { margin-bottom: 8px; }
+.milestones { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 0; }
+.milestones li { margin: 0; padding: 6px 10px; font-size: 14px; background: #f2f7fc; color: #5a6f99; border-radius: 999px; }
+.milestones li.done { background: #d8f0e0; color: #0d5a2c; }
+.milestones li.done::before { content: "✓ "; }
+.note { font-size: 13px; color: #5a6f99; margin-bottom: 0; }</style></head><body><!-- APP HTML START --><main>
   <p>MOVE / YOUR DAILY MOMENTUM</p>
   <h1>Every move counts.</h1>
   <p>A little movement. A little more you.</p>
   <div class="stats">
-    <p><strong id="minutes">0</strong> minutes</p>
+    <p><strong id="minutes">0</strong> minutes this week</p>
     <p><strong id="sessions">0</strong> activities</p>
   </div>
+  <section class="card" aria-labelledby="goal-title">
+    <h2 id="goal-title">This week's goal</h2>
+    <progress id="goal-bar" max="60" value="0" aria-label="Minutes toward weekly goal"></progress>
+    <p id="goal-text"></p>
+    <ul class="milestones" aria-label="Milestones">
+      <li data-at="10">First 10 minutes</li>
+      <li data-at="30">Halfway</li>
+      <li data-at="60">Weekly goal</li>
+    </ul>
+  </section>
   <form id="activity-form">
     <label>Activity <select name="activity"><option>Walk</option><option>Run</option></select></label>
-    <label>Minutes <input name="minutes" type="number" min="1" max="300" step="1" value="10" required></label>
-    <button type="button" id="log-activity">Log my activity</button>
+    <fieldset>
+      <legend>Quick log</legend>
+      <div class="quick">
+        <button type="button" data-minutes="10">10 min</button>
+        <button type="button" data-minutes="15">15 min</button>
+        <button type="button" data-minutes="20">20 min</button>
+        <button type="button" data-minutes="30">30 min</button>
+      </div>
+    </fieldset>
+    <label>Or enter minutes <input name="minutes" type="number" min="1" max="300" step="1" value="10" required></label>
+    <button type="submit" id="log-activity">Log my activity</button>
   </form>
   <p id="feedback" role="status">Start with a moment of movement.</p>
   <ul id="activities" aria-label="Logged activities"></ul>
-</main><!-- APP HTML END --><script id="app-js">const activities = [];
-document.getElementById('log-activity').addEventListener('click', () => {
-  const form = document.getElementById('activity-form');
-  if (!form.reportValidity()) return;
-  const minutes = Number(form.elements.minutes.value);
+  <section class="card" aria-labelledby="past-title">
+    <h2 id="past-title">You vs. last week</h2>
+    <div class="bar"><span>Last week</span><progress id="past-ref" aria-label="Last week minutes"></progress><span id="past-ref-min"></span></div>
+    <div class="bar"><span>This week</span><progress id="past-you" aria-label="This week minutes"></progress><span id="past-you-min"></span></div>
+    <p id="past-text"></p>
+  </section>
+  <section class="card" aria-labelledby="peers-title">
+    <h2 id="peers-title">Returners like you</h2>
+    <div class="bar"><span>Typical</span><progress id="peers-ref" aria-label="Typical returner minutes"></progress><span id="peers-ref-min"></span></div>
+    <div class="bar"><span>You</span><progress id="peers-you" aria-label="Your minutes"></progress><span id="peers-you-min"></span></div>
+    <p id="peers-text"></p>
+    <p class="note">Last week and "returners like you" are example figures for this prototype, not real data.</p>
+  </section>
+</main><!-- APP HTML END --><script id="app-js">const GOAL = 60; // CD2: small, achievable weekly goal
+const LAST_WEEK = 35; // CD4: fictional past-self baseline
+const PEERS = 45; // CD5: fictional typical week for returners, not highly active people
+const MILESTONES = [[10, 'First 10 minutes'], [30, 'Halfway there'], [60, 'Weekly goal reached']];
+const activities = [];
+const $ = id => document.getElementById(id);
+const form = $('activity-form');
+
+function setBars(prefix, reference, total) {
+  const max = Math.max(reference, total);
+  $(prefix + '-ref').max = max;
+  $(prefix + '-ref').value = reference;
+  $(prefix + '-you').max = max;
+  $(prefix + '-you').value = total;
+  $(prefix + '-ref-min').textContent = reference + ' min';
+  $(prefix + '-you-min').textContent = total + ' min';
+}
+
+function render() {
+  const total = activities.reduce((sum, item) => sum + item.minutes, 0);
+  $('minutes').textContent = total;
+  $('sessions').textContent = activities.length;
+  $('goal-bar').value = Math.min(total, GOAL);
+  $('goal-text').textContent = total >= GOAL
+    ? `Goal reached: ${total} of ${GOAL} minutes. Anything more is a bonus.`
+    : `${total} of ${GOAL} minutes · ${GOAL - total} to go`;
+  document.querySelectorAll('.milestones li').forEach(item => item.classList.toggle('done', total >= Number(item.dataset.at)));
+
+  setBars('past', LAST_WEEK, total);
+  $('past-text').textContent = total === 0 ? `Last week you moved ${LAST_WEEK} minutes. This week builds on that.`
+    : total < LAST_WEEK ? `${LAST_WEEK - total} more minutes to match last week.`
+    : total === LAST_WEEK ? 'You matched last week. Steady progress.'
+    : `${total - LAST_WEEK} minutes more than last week. You're growing.`;
+
+  setBars('peers', PEERS, total);
+  $('peers-text').textContent = total < PEERS
+    ? 'Most returners restart with 10–20 minute walks, a few times a week. You are building the same rhythm.'
+    : 'You are moving more than a typical returner this week. Keep it comfortable so it lasts.';
+  return total;
+}
+
+function logActivity(type, minutes) {
   if (!Number.isInteger(minutes) || minutes < 1 || minutes > 300) return;
-  const activity = { type: form.elements.activity.value, minutes };
+  const activity = { type, minutes };
   activities.push(activity);
-  document.getElementById('minutes').textContent = activities.reduce((sum, item) => sum + item.minutes, 0);
-  document.getElementById('sessions').textContent = activities.length;
   const row = document.createElement('li');
   row.textContent = activity.type + ' · ' + minutes + ' minutes';
-  document.getElementById('activities').prepend(row);
-  document.getElementById('feedback').textContent = 'You made time for yourself. Nice work!';
+  $('activities').prepend(row);
+  const total = render();
+  const before = total - minutes;
+  const milestone = MILESTONES.filter(([at]) => before < at && total >= at).pop();
+  const remaining = GOAL - total;
+  const step = remaining <= 20 ? remaining : 10;
+  const next = remaining > 0
+    ? `Next step: a ${step}-minute walk takes you to ${total + step} of ${GOAL}.`
+    : 'Rest counts too. Your week already adds up.';
+  $('feedback').textContent = (milestone ? milestone[1] + '! ' : '') + `${type} · ${minutes} min logged. ${next}`;
   parent.postMessage({ source: 'move-starter', activity }, '*');
-});</script></body></html>
+}
+
+form.addEventListener('submit', event => {
+  event.preventDefault();
+  if (!form.reportValidity()) return;
+  logActivity(form.elements.activity.value, Number(form.elements.minutes.value));
+});
+document.querySelectorAll('[data-minutes]').forEach(button => button.addEventListener('click', () => {
+  logActivity(form.elements.activity.value, Number(button.dataset.minutes));
+}));
+render();</script></body></html>

@@ -38,7 +38,7 @@ Read this brief before editing. Make a branch named `pair/dirk-chris`. Keep the 
 - No secrets, external services, or real personal data.
 
 ## Handoff — complete before submitting
-- Motivation hypothesis:
-- What changed:
-- Known limitation:
-- Next step:
+- Motivation hypothesis: For busy adults getting back into fitness, the main barrier is that it feels like too much of a time or energy commitment. We focused on Core Drive 6 — reducing that fear of not having enough time — by making fitness feel easy and flexible. No gym required: you can do it at home, in the park, or wherever you are. We used tiny, customizable quests — small bodyweight activities and habit-sized goals — so returning to movement feels achievable. It's the gym in your pocket: anywhere can be your gym.
+- What changed: Added a prominent "⚡ Quick log: 2-min anywhere move" button as the primary action, reusing the existing activity-logging logic (same activities list, totals, and feedback row). Moved the walk/run form behind a native collapsible "Log another activity" disclosure so the interface reads simpler and it's unambiguous the quick-quest is a button, not a static feedback block — first-round feedback was that the earlier orange version was unclear ("is it a button? is it a feedback mechanic?") and cluttered. Added a daily goal + progress bar (20-minute default) so users can see how close they are to a manageable target. Kept the "minutes / activities" stat tiles exactly as before per direct feedback ("I liked it as your 18 minutes and 5 activities").
+- Known limitation: The daily goal (20 minutes) is fixed, not user-configurable. Nothing persists across a page reload — no accounts/storage, per the brief's constraints. There's no visual distinction yet between a quick-quest entry and a full walk/run session in the activity list.
+- Next step: Test whether a user-adjustable daily goal changes perceived achievability more than the fixed default, and consider persisting today's log (e.g. localStorage) so a returning user sees their progress carry across a session.
