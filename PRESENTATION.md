@@ -6,8 +6,7 @@
 3. Build together: one chat with four prepared prompts. Run creates HTML, adds CSS, applies JavaScript, then copies the finished file to the five pair folders and publishes.
 4. Sync your local branch: copy a pair-specific AI prompt; explain fetch and merge for direct clones and forks.
 5. Twelve-minute pair practice.
-6. Real conflict exercise.
-7. Branch, diff, review and merge visuals.
+6. Branch, diff, review and merge visuals on the slide, synchronized with the GitHub companion window. A second tab provides an interactive conflict rehearsal.
 8. Deployment: local files, shared source, and published releases; frontend vs backend deployments.
 9. Architecture: browser, API, database, permissions, secrets, and failure handling.
 10. Activity table: live memory demo vs durable records, schema, and reads/writes.
@@ -33,3 +32,5 @@ The path bar explicitly scopes the view to pairs/. The prepared live build remai
 See workshop/FACILITATOR.md for instructions. The hosted handler is api/workshop.js; hosted/github.mjs constrains repository operations. Production secrets live in Vercel environment variables. Run vercel deploy --prod from the linked html-workshop-api project to update the backend; the Pages workflow updates the public frontend. The local service is scripts/presenter-server.mjs; Git operations are scripts/presenter-workspace.mjs. It binds to loopback only, rejects other hosts/origins, and requires a per-process session token for mutations. Commands have fixed argument lists; the browser cannot send arbitrary shell commands or file paths to write.
 
 The database table is a browser-memory teaching example, not a connected database. The earlier presentation is preserved under versions/2026-09-22-before-pair-workshop/ and in Git history.
+
+The GitHub desktop icon opens a draggable teaching simulation. Entering the Git flow section opens it automatically. Slide buttons update its branch, diff, review, merge, and history views. These controls do not mutate GitHub. The conflict tab demonstrates choosing a heading, marking the file resolved, and committing a simulated resolution.
