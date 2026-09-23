@@ -1,4 +1,4 @@
-# Is HTML the new English?
+# One Repo. Many Minds.
 
 An interactive presentation and shared prototype gallery for The Octalysis Group. HTML, CSS, JavaScript, AI workflows, and practical ways to build on each other's work.
 
