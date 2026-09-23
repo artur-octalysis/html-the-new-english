@@ -38,7 +38,7 @@ Read this brief before editing. Make a branch named `pair/sergio-yu-kai`. Keep t
 - No secrets, external services, or real personal data.
 
 ## Handoff — complete before submitting
-- Motivation hypothesis:
-- What changed:
-- Known limitation:
-- Next step:
+- Motivation hypothesis: CD2 Development & Accomplishment. Busy returners keep logging when small efforts visibly add up toward a summit they chose themselves. Every minute climbs 10 m, the first 10-minute activity already tops the Leaning Tower of Pisa (56 m), and each summit reached unlocks bolder ones, up to Everest.
+- What changed: Added a summit picker with four tiers (eight summits, from Pisa to Everest), a progress bar with minutes to go, and carried-over metres so extra effort is never lost. Reaching a summit unlocks a summit moment: add a photo (or a sample hiker) and the browser generates a short animated 9:16 summit video to download or share. Pressing Enter in the minutes field now logs the activity.
+- Known limitation: The photo never leaves the device, but it is still personal data, so the sample hiker is the safer default for demos. The change (about 500 lines) goes well beyond the 12-minute scope.
+- Next step: Simplify the scope: replace the video with a shareable summit image and keep the climb as the core loop.
