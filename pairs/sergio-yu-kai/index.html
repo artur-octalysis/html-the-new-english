@@ -1,16 +1,36 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Every move counts</title><style id="app-css">* { box-sizing: border-box; }
+[hidden] { display: none !important; }
 body { margin: 0; padding: 24px; background: #f2f7fc; color: #0e2a6e; font-family: system-ui, sans-serif; }
 main { max-width: 420px; margin: auto; }
 h1 { font-size: 36px; line-height: 1.1; }
+h2 { font-size: 22px; margin: 0; }
 .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .stats p, form, li { background: white; padding: 16px; border-radius: 16px; }
 strong { font-size: 28px; display: block; }
 form { display: flex; flex-direction: column; gap: 12px; }
 label { display: grid; gap: 6px; }
-input, select, button { font: inherit; padding: 12px; border: 1px solid #b7cfe5; border-radius: 8px; }
+input, select, button { font: inherit; padding: 12px; border: 1px solid #b7cfe5; border-radius: 8px; min-width: 0; max-width: 100%; }
 button { background: #005cc2; color: white; cursor: pointer; }
+button.secondary { background: white; color: #005cc2; border-color: #005cc2; }
+button:disabled { opacity: .5; cursor: not-allowed; }
+:focus-visible { outline: 3px solid #ff8a00; outline-offset: 2px; }
 ul { list-style: none; padding: 0; }
-li { margin-bottom: 8px; }</style></head><body><!-- APP HTML START --><main>
+li { margin-bottom: 8px; }
+.card { background: white; padding: 16px; border-radius: 16px; margin: 16px 0; display: flex; flex-direction: column; gap: 12px; }
+.hint { font-size: 14px; color: #4a5f8a; margin: 0; }
+#goal-label { margin: 0; font-weight: 600; }
+progress { width: 100%; height: 14px; accent-color: #005cc2; }
+fieldset { border: 0; margin: 0; padding: 0; }
+legend { font-weight: 600; padding: 0; }
+.tier-title { margin: 12px 0 0; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; color: #4a5f8a; }
+.goal { display: flex; align-items: center; gap: 10px; margin-top: 8px; padding: 10px 12px; border: 1px solid #b7cfe5; border-radius: 10px; cursor: pointer; }
+.goal input { padding: 0; margin: 0; width: 18px; height: 18px; }
+.goal.locked { opacity: .55; cursor: not-allowed; }
+.goal.done { background: #e8f5ec; border-color: #9fd3b0; }
+.goal-meta { display: block; font-size: 14px; color: #4a5f8a; }
+canvas, video { display: block; width: 100%; max-width: 300px; margin: 0 auto; border-radius: 16px; background: #0e2a6e; }
+.actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.actions a { display: inline-block; padding: 12px 16px; background: #005cc2; color: white; border-radius: 8px; text-decoration: none; }</style></head><body><!-- APP HTML START --><main>
   <p>MOVE / YOUR DAILY MOMENTUM</p>
   <h1>Every move counts.</h1>
   <p>A little movement. A little more you.</p>
@@ -18,26 +38,502 @@ li { margin-bottom: 8px; }</style></head><body><!-- APP HTML START --><main>
     <p><strong id="minutes">0</strong> minutes</p>
     <p><strong id="sessions">0</strong> activities</p>
   </div>
+
   <form id="activity-form">
     <label>Activity <select name="activity"><option>Walk</option><option>Run</option></select></label>
     <label>Minutes <input name="minutes" type="number" min="1" max="300" step="1" value="10" required></label>
-    <button type="button" id="log-activity">Log my activity</button>
+    <button type="submit" id="log-activity">Log my activity</button>
   </form>
   <p id="feedback" role="status">Start with a moment of movement.</p>
+
+  <section class="card" aria-labelledby="goal-title">
+    <h2 id="goal-title">Your summit</h2>
+    <p class="hint">Every minute you move climbs 10 m. Reach a summit to unlock bolder ones.</p>
+    <p id="goal-label"></p>
+    <progress id="goal-bar" aria-labelledby="goal-label" max="100" value="0"></progress>
+    <p id="goal-next" class="hint"></p>
+    <fieldset>
+      <legend>Choose your summit</legend>
+      <div id="goal-list"></div>
+    </fieldset>
+  </section>
+
+  <section id="summit" class="card" aria-labelledby="summit-title" hidden>
+    <h2 id="summit-title">Your summit moment</h2>
+    <p class="hint">Add a photo and get a short animated video of you reaching the top. Your photo stays on this device: nothing is uploaded.</p>
+    <label>Summit <select id="summit-goal"></select></label>
+    <label>Your photo <input id="summit-photo" type="file" accept="image/*"></label>
+    <button type="button" id="sample-hiker" class="secondary">Use a sample hiker instead</button>
+    <button type="button" id="make-video" disabled>Create my summit video</button>
+    <canvas id="summit-canvas" width="540" height="960" aria-label="Summit video preview" hidden></canvas>
+    <video id="summit-video" controls playsinline hidden></video>
+    <p id="summit-status" role="status" class="hint"></p>
+    <div class="actions">
+      <a id="summit-download" hidden>Download video</a>
+      <button type="button" id="summit-share" hidden>Share</button>
+    </div>
+  </section>
+
   <ul id="activities" aria-label="Logged activities"></ul>
 </main><!-- APP HTML END --><script id="app-js">const activities = [];
-document.getElementById('log-activity').addEventListener('click', () => {
-  const form = document.getElementById('activity-form');
+
+// --- Summits: every logged minute climbs 10 m toward the chosen summit ---
+const METERS_PER_MINUTE = 10;
+const TIERS = { 1: 'First steps', 2: 'Landmarks', 3: 'Mountains', 4: 'Bold summits' };
+const GOALS = [
+  { id: 'pisa', name: 'Leaning Tower of Pisa', height: 56, tier: 1, kind: 'tower' },
+  { id: 'bigben', name: 'Big Ben', height: 96, tier: 1, kind: 'tower' },
+  { id: 'eiffel', name: 'Eiffel Tower', height: 330, tier: 2, kind: 'tower' },
+  { id: 'burj', name: 'Burj Khalifa', height: 828, tier: 2, kind: 'tower' },
+  { id: 'vesuvius', name: 'Mount Vesuvius', height: 1281, tier: 3, kind: 'mountain' },
+  { id: 'fuji', name: 'Mount Fuji', height: 3776, tier: 3, kind: 'mountain' },
+  { id: 'kilimanjaro', name: 'Kilimanjaro', height: 5895, tier: 4, kind: 'mountain' },
+  { id: 'everest', name: 'Mount Everest', height: 8849, tier: 4, kind: 'mountain' },
+];
+const climbed = Object.fromEntries(GOALS.map(g => [g.id, 0]));
+const reached = [];      // goal ids, in the order they were reached
+let unlockedTier = 1;
+let activeId = 'pisa';
+let spare = 0;           // extra metres carried to the next summit: nothing is ever lost
+let summitImage = null;
+let mediaUrl = null;
+
+const $ = id => document.getElementById(id);
+const fmt = n => n.toLocaleString('en-US');
+const goalById = id => GOALS.find(g => g.id === id);
+const minutesLeft = g => Math.ceil(Math.max(g.height - climbed[g.id], 0) / METERS_PER_MINUTE);
+
+function addMeters(meters) {
+  const goal = goalById(activeId);
+  if (reached.includes(goal.id)) { spare += meters; return null; }
+  climbed[goal.id] += meters;
+  if (climbed[goal.id] < goal.height) return null;
+  spare += climbed[goal.id] - goal.height;
+  climbed[goal.id] = goal.height;
+  reached.push(goal.id);
+  unlockedTier = Math.max(unlockedTier, Math.min(goal.tier + 1, 4));
+  return goal;
+}
+
+function renderGoals() {
+  const list = $('goal-list');
+  list.innerHTML = '';
+  for (const tier of [1, 2, 3, 4]) {
+    const title = document.createElement('p');
+    title.className = 'tier-title';
+    title.textContent = TIERS[tier] + (tier > unlockedTier ? ' · locked' : '');
+    list.append(title);
+    for (const g of GOALS.filter(x => x.tier === tier)) {
+      const locked = tier > unlockedTier;
+      const done = reached.includes(g.id);
+      const label = document.createElement('label');
+      label.className = 'goal' + (locked ? ' locked' : '') + (done ? ' done' : '');
+      const input = document.createElement('input');
+      input.type = 'radio';
+      input.name = 'goal';
+      input.value = g.id;
+      input.checked = g.id === activeId;
+      input.disabled = locked || done;
+      const text = document.createElement('span');
+      const name = document.createElement('span');
+      name.textContent = g.name;
+      const meta = document.createElement('span');
+      meta.className = 'goal-meta';
+      meta.textContent = fmt(g.height) + ' m · ' + (done ? 'Reached' : locked ? 'Reach a ' + TIERS[tier - 1].toLowerCase() + ' summit to unlock' : fmt(minutesLeft(g)) + ' min to go');
+      text.append(name, meta);
+      label.append(input, text);
+      list.append(label);
+    }
+  }
+}
+
+function renderProgress() {
+  const g = goalById(activeId);
+  const extra = spare ? ' ' + fmt(spare) + ' m of extra climbing will come with you.' : '';
+  if (reached.includes(g.id)) {
+    $('goal-label').textContent = 'You reached ' + g.name + '! Pick your next summit.';
+    $('goal-bar').max = 1;
+    $('goal-bar').value = 1;
+    $('goal-next').textContent = extra.trim();
+  } else {
+    $('goal-label').textContent = g.name + ' · ' + fmt(climbed[g.id]) + ' m of ' + fmt(g.height) + ' m';
+    $('goal-bar').max = g.height;
+    $('goal-bar').value = climbed[g.id];
+    $('goal-next').textContent = 'About ' + fmt(minutesLeft(g)) + ' more minutes to the top.';
+  }
+}
+
+function renderAll() { renderGoals(); renderProgress(); }
+
+function reachedMessage(goal, tierBefore) {
+  let msg = 'You reached the top of ' + goal.name + ' (' + fmt(goal.height) + ' m)! Your summit video is unlocked below.';
+  if (unlockedTier > tierBefore) {
+    const names = GOALS.filter(x => x.tier === unlockedTier).map(x => x.name).join(' and ');
+    msg += ' New summits are open: ' + names + '.';
+  }
+  return msg;
+}
+
+$('goal-list').addEventListener('change', event => {
+  activeId = event.target.value;
+  const tierBefore = unlockedTier;
+  const carried = spare;
+  spare = 0;
+  const done = carried ? addMeters(carried) : null;
+  const g = goalById(activeId);
+  $('feedback').textContent = done ? reachedMessage(done, tierBefore)
+    : 'Next summit: ' + g.name + '.' + (carried ? ' Your ' + fmt(carried) + ' extra metres already count.' : '') + ' About ' + fmt(minutesLeft(g)) + ' minutes to go.';
+  if (done) showSummit(done);
+  renderAll();
+  // the list is rebuilt, so put keyboard focus back on the chosen summit
+  const radio = $('goal-list').querySelector('input[value="' + activeId + '"]');
+  if (radio && !radio.disabled) radio.focus();
+});
+
+// --- Logging ---
+const form = $('activity-form');
+form.elements.minutes.addEventListener('invalid', () => {
+  $('feedback').textContent = 'Enter whole minutes between 1 and 300, then log it.';
+});
+form.addEventListener('submit', event => {
+  event.preventDefault();
   if (!form.reportValidity()) return;
   const minutes = Number(form.elements.minutes.value);
   if (!Number.isInteger(minutes) || minutes < 1 || minutes > 300) return;
   const activity = { type: form.elements.activity.value, minutes };
   activities.push(activity);
-  document.getElementById('minutes').textContent = activities.reduce((sum, item) => sum + item.minutes, 0);
-  document.getElementById('sessions').textContent = activities.length;
+  $('minutes').textContent = fmt(activities.reduce((sum, item) => sum + item.minutes, 0));
+  $('sessions').textContent = activities.length;
+
+  const meters = minutes * METERS_PER_MINUTE;
+  const wasReached = reached.includes(activeId);
+  const tierBefore = unlockedTier;
+  const done = addMeters(meters);
   const row = document.createElement('li');
-  row.textContent = activity.type + ' · ' + minutes + ' minutes';
-  document.getElementById('activities').prepend(row);
-  document.getElementById('feedback').textContent = 'You made time for yourself. Nice work!';
+  row.textContent = activity.type + ' · ' + minutes + ' minutes · +' + fmt(meters) + ' m';
+  $('activities').prepend(row);
+
+  const g = goalById(activeId);
+  let msg = 'You made time for yourself. ';
+  if (done) msg += reachedMessage(done, tierBefore);
+  else if (wasReached) msg += fmt(meters) + ' m saved. Pick your next summit and they come with you.';
+  else msg += 'You climbed ' + fmt(meters) + ' m. About ' + fmt(minutesLeft(g)) + ' more minutes to the top of ' + g.name + '.';
+  $('feedback').textContent = msg;
+  if (done) showSummit(done);
+  renderAll();
   parent.postMessage({ source: 'move-starter', activity }, '*');
-});</script></body></html>
+});
+
+// --- Summit moment: photo + animated video, made entirely in the browser ---
+function showSummit(goal) {
+  $('summit').hidden = false;
+  const select = $('summit-goal');
+  select.innerHTML = '';
+  for (const id of reached) {
+    const option = document.createElement('option');
+    option.value = id;
+    option.textContent = goalById(id).name + ' · ' + fmt(goalById(id).height) + ' m';
+    select.append(option);
+  }
+  select.value = goal.id;
+  drawPreview();
+}
+
+function drawPreview() {
+  const goal = goalById($('summit-goal').value);
+  if (!summitImage || !goal) return;
+  $('summit-video').hidden = true;
+  $('summit-canvas').hidden = false;
+  drawFrame($('summit-canvas').getContext('2d'), goal, summitImage, 1);
+}
+
+function setImage(img, message) {
+  summitImage = img;
+  $('make-video').disabled = false;
+  $('summit-status').textContent = message;
+  drawPreview();
+}
+
+$('summit-goal').addEventListener('change', drawPreview);
+
+$('summit-photo').addEventListener('change', () => {
+  const file = $('summit-photo').files[0];
+  if (!file) return;
+  if (!file.type.startsWith('image/')) {
+    $('summit-status').textContent = 'Choose an image file, such as a JPG or PNG.';
+    return;
+  }
+  const img = new Image();
+  img.onload = () => setImage(img, 'Looking good. Create your video when you are ready.');
+  img.onerror = () => { $('summit-status').textContent = 'That image could not be read here. Try a JPG or PNG.'; };
+  img.src = URL.createObjectURL(file);
+});
+
+$('sample-hiker').addEventListener('click', () => {
+  const c = document.createElement('canvas');
+  c.width = c.height = 240;
+  const x = c.getContext('2d');
+  x.fillStyle = '#ffd166'; x.fillRect(0, 0, 240, 240);
+  x.fillStyle = '#0e2a6e';
+  x.beginPath(); x.arc(120, 96, 42, 0, Math.PI * 2); x.fill();
+  x.beginPath(); x.moveTo(40, 240); x.quadraticCurveTo(120, 120, 200, 240); x.fill();
+  x.fillStyle = '#ff5a5f'; x.fillRect(76, 50, 88, 18);
+  setImage(c, 'Using a sample hiker. Create your video when you are ready.');
+});
+
+const W = 540, H = 960, DURATION = 6500;
+const rand = i => { const s = Math.sin(i * 12.9898) * 43758.5453; return s - Math.floor(s); };
+const CONFETTI = Array.from({ length: 90 }, (_, i) => ({
+  x: rand(i) * W, y: -20 - rand(i + 50) * 400, speed: 250 + rand(i + 100) * 300,
+  size: 6 + rand(i + 200) * 8, spin: rand(i + 300) * 6.28,
+  color: ['#ff5a5f', '#ffd166', '#06d6a0', '#ffffff', '#118ab2'][i % 5],
+}));
+const ease = t => (t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2);
+
+function pathFor(goal) {
+  return goal.kind === 'tower'
+    ? [[200, 880], [340, 760], [210, 640], [325, 520], [235, 410], [270, 265]]
+    : [[100, 880], [420, 770], [150, 650], [370, 520], [220, 410], [270, 265]];
+}
+
+function pointAt(points, t) {
+  const lengths = points.slice(1).map((p, i) => Math.hypot(p[0] - points[i][0], p[1] - points[i][1]));
+  let left = t * lengths.reduce((a, b) => a + b, 0);
+  const trail = [];
+  for (let i = 0; i < lengths.length; i++) {
+    if (left <= lengths[i]) {
+      const k = lengths[i] ? left / lengths[i] : 0;
+      const [ax, ay] = points[i], [bx, by] = points[i + 1];
+      return { x: ax + (bx - ax) * k, y: ay + (by - ay) * k, trail };
+    }
+    left -= lengths[i];
+    trail.push(points[i + 1]);
+  }
+  const last = points[points.length - 1];
+  return { x: last[0], y: last[1], trail };
+}
+
+function shape(ctx, pts, color) {
+  ctx.fillStyle = color;
+  ctx.beginPath();
+  ctx.moveTo(pts[0][0], pts[0][1]);
+  for (const p of pts.slice(1)) ctx.lineTo(p[0], p[1]);
+  ctx.closePath();
+  ctx.fill();
+}
+
+function drawLandmark(ctx, goal) {
+  if (goal.kind === 'mountain') {
+    shape(ctx, [[-60, 900], [270, 280], [600, 900]], '#5a6f8f');
+    shape(ctx, [[270, 280], [600, 900], [330, 900]], '#46597a');
+    shape(ctx, [[270, 280], [206, 400], [235, 388], [258, 412], [285, 386], [310, 406], [334, 400]], '#ffffff');
+  } else {
+    shape(ctx, [[170, 900], [230, 330], [310, 330], [370, 900]], '#6a7fa3');
+    shape(ctx, [[270, 330], [310, 330], [370, 900], [270, 900]], '#56698c');
+    ctx.fillStyle = '#6a7fa3';
+    ctx.fillRect(215, 310, 110, 24);
+    shape(ctx, [[255, 310], [270, 240], [285, 310]], '#56698c');
+    ctx.fillStyle = 'rgba(255, 226, 154, .8)';
+    for (let y = 380; y < 880; y += 60) ctx.fillRect(262, y, 16, 26);
+  }
+}
+
+function drawAvatar(ctx, img, x, y, r) {
+  ctx.save();
+  ctx.beginPath();
+  ctx.arc(x, y, r, 0, Math.PI * 2);
+  ctx.fillStyle = '#ffffff';
+  ctx.shadowColor = 'rgba(0, 0, 0, .35)';
+  ctx.shadowBlur = 14;
+  ctx.fill();
+  ctx.shadowBlur = 0;
+  ctx.clip();
+  const iw = img.naturalWidth || img.width, ih = img.naturalHeight || img.height;
+  const s = Math.max((2 * r) / iw, (2 * r) / ih);
+  ctx.drawImage(img, x - (iw * s) / 2, y - (ih * s) / 2, iw * s, ih * s);
+  ctx.restore();
+  ctx.beginPath();
+  ctx.arc(x, y, r, 0, Math.PI * 2);
+  ctx.lineWidth = 6;
+  ctx.strokeStyle = '#ffffff';
+  ctx.stroke();
+}
+
+function fitText(ctx, text, x, y, size, weight, maxWidth) {
+  let s = size;
+  do { ctx.font = weight + ' ' + s + 'px system-ui, sans-serif'; s -= 2; } while (ctx.measureText(text).width > maxWidth && s > 12);
+  ctx.fillText(text, x, y);
+}
+
+function drawFrame(ctx, goal, img, p) {
+  const climb = ease(Math.min(p / 0.6, 1));
+  const cel = Math.max(0, (p - 0.6) / 0.4);
+
+  const sky = ctx.createLinearGradient(0, 0, 0, H);
+  sky.addColorStop(0, '#1d3b8f');
+  sky.addColorStop(0.55, '#6f9fdc');
+  sky.addColorStop(1, '#ffd6a0');
+  ctx.fillStyle = sky;
+  ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = 'rgba(255, 226, 154, .9)';
+  ctx.beginPath();
+  ctx.arc(440, 460 - 140 * climb, 54, 0, Math.PI * 2);
+  ctx.fill();
+  shape(ctx, [[0, 760], [120, 650], [230, 740], [380, 620], [540, 720], [540, 900], [0, 900]], '#8fb0d9');
+  drawLandmark(ctx, goal);
+  ctx.fillStyle = '#2f5d46';
+  ctx.fillRect(0, 900, W, 60);
+
+  // trail climbed so far
+  const pts = pathFor(goal);
+  const pos = pointAt(pts, climb);
+  ctx.save();
+  ctx.setLineDash([10, 10]);
+  ctx.lineWidth = 5;
+  ctx.strokeStyle = 'rgba(255, 255, 255, .85)';
+  ctx.beginPath();
+  ctx.moveTo(pts[0][0], pts[0][1]);
+  for (const q of pos.trail) ctx.lineTo(q[0], q[1]);
+  ctx.lineTo(pos.x, pos.y);
+  ctx.stroke();
+  ctx.restore();
+
+  // flag goes up once you arrive
+  if (cel > 0) {
+    const [fx, fy] = goal.kind === 'tower' ? [330, 310] : [308, 360];
+    const top = fy - 120 * Math.min(cel * 3, 1);
+    ctx.strokeStyle = '#ffffff';
+    ctx.lineWidth = 5;
+    ctx.beginPath(); ctx.moveTo(fx, fy); ctx.lineTo(fx, top); ctx.stroke();
+    const wave = Math.sin(p * 40) * 6;
+    shape(ctx, [[fx, top], [fx + 72 + wave, top + 22], [fx, top + 44]], '#ff5a5f');
+  }
+
+  const bob = climb < 1 ? Math.sin(p * 70) * 4 : 0;
+  drawAvatar(ctx, img, pos.x, pos.y + bob, 46);
+
+  // heads-up display
+  ctx.fillStyle = '#ffffff';
+  ctx.textAlign = 'left';
+  ctx.font = '600 20px system-ui, sans-serif';
+  ctx.fillText('ALTITUDE', 32, 64);
+  ctx.font = '800 56px system-ui, sans-serif';
+  ctx.fillText(fmt(Math.round(goal.height * climb)) + ' m', 32, 122);
+  fitText(ctx, 'to ' + goal.name, 32, 158, 24, '600', 330);
+  ctx.textAlign = 'right';
+  ctx.font = '500 15px system-ui, sans-serif';
+  ctx.fillText('MOVE · animated celebration', 508, 64);
+
+  if (cel > 0) {
+    const seconds = cel * DURATION * 0.4 / 1000;
+    for (const c of CONFETTI) {
+      const y = c.y + seconds * c.speed;
+      if (y > H) continue;
+      ctx.save();
+      ctx.translate(c.x + Math.sin(seconds * 3 + c.spin) * 20, y);
+      ctx.rotate(c.spin + seconds * 4);
+      ctx.fillStyle = c.color;
+      ctx.fillRect(-c.size / 2, -c.size / 4, c.size, c.size / 2);
+      ctx.restore();
+    }
+    ctx.globalAlpha = Math.min(cel * 2.5, 1);
+    ctx.fillStyle = 'rgba(14, 42, 110, .85)';
+    ctx.beginPath();
+    if (ctx.roundRect) ctx.roundRect(30, 580, 480, 170, 20); else ctx.rect(30, 580, 480, 170);
+    ctx.fill();
+    ctx.fillStyle = '#ffffff';
+    ctx.textAlign = 'center';
+    ctx.font = '700 22px system-ui, sans-serif';
+    ctx.fillText('SUMMIT REACHED', W / 2, 630);
+    fitText(ctx, goal.name, W / 2, 686, 44, '800', 440);
+    ctx.font = '600 24px system-ui, sans-serif';
+    ctx.fillText(fmt(goal.height) + ' m · one walk at a time', W / 2, 726);
+    ctx.globalAlpha = 1;
+  }
+
+  ctx.fillStyle = '#ffffff';
+  ctx.textAlign = 'center';
+  ctx.font = '600 22px system-ui, sans-serif';
+  ctx.fillText('Every move counts.', W / 2, 938);
+}
+
+function pickVideoType() {
+  if (!window.MediaRecorder) return null;
+  return ['video/mp4;codecs=avc1', 'video/mp4', 'video/webm;codecs=vp9', 'video/webm;codecs=vp8', 'video/webm']
+    .find(t => MediaRecorder.isTypeSupported(t)) || null;
+}
+
+async function recordSummit(goal, img) {
+  const canvas = $('summit-canvas');
+  const ctx = canvas.getContext('2d');
+  drawFrame(ctx, goal, img, 0);
+  const type = pickVideoType();
+  if (!type || !canvas.captureStream) return null;
+  const stream = canvas.captureStream(30);
+  const recorder = new MediaRecorder(stream, { mimeType: type, videoBitsPerSecond: 4000000 });
+  const chunks = [];
+  recorder.ondataavailable = e => { if (e.data.size) chunks.push(e.data); };
+  const stopped = new Promise(resolve => { recorder.onstop = resolve; });
+  recorder.start(250);
+  await new Promise(resolve => {
+    const t0 = performance.now();
+    const tick = now => {
+      const p = Math.min(Math.max((now - t0) / DURATION, 0), 1);
+      drawFrame(ctx, goal, img, p);
+      if (p < 1) requestAnimationFrame(tick); else setTimeout(resolve, 400);
+    };
+    requestAnimationFrame(tick);
+  });
+  recorder.stop();
+  await stopped;
+  stream.getTracks().forEach(t => t.stop());
+  const mime = type.split(';')[0];
+  return { blob: new Blob(chunks, { type: mime }), ext: mime === 'video/mp4' ? 'mp4' : 'webm' };
+}
+
+$('make-video').addEventListener('click', async () => {
+  const goal = goalById($('summit-goal').value);
+  if (!summitImage || !goal) return;
+  const button = $('make-video');
+  button.disabled = true;
+  $('summit-video').hidden = true;
+  $('summit-canvas').hidden = false;
+  $('summit-download').hidden = true;
+  $('summit-share').hidden = true;
+  $('summit-status').textContent = 'Recording your climb. This takes about 7 seconds.';
+  let result = null;
+  try { result = await recordSummit(goal, summitImage); } catch (e) { result = null; }
+  if (!result) {
+    drawFrame($('summit-canvas').getContext('2d'), goal, summitImage, 1);
+    const blob = await new Promise(resolve => $('summit-canvas').toBlob(resolve, 'image/png'));
+    result = { blob, ext: 'png' };
+  }
+  if (mediaUrl) URL.revokeObjectURL(mediaUrl);
+  mediaUrl = URL.createObjectURL(result.blob);
+  const isVideo = result.ext !== 'png';
+  if (isVideo) {
+    $('summit-video').src = mediaUrl;
+    $('summit-video').hidden = false;
+    $('summit-canvas').hidden = true;
+  }
+  const fileName = 'summit-' + goal.id + '.' + result.ext;
+  const link = $('summit-download');
+  link.href = mediaUrl;
+  link.download = fileName;
+  link.textContent = isVideo ? 'Download video' : 'Download image';
+  link.hidden = false;
+  const file = new File([result.blob], fileName, { type: result.blob.type });
+  const canShare = navigator.canShare && navigator.canShare({ files: [file] });
+  const share = $('summit-share');
+  share.hidden = !canShare;
+  share.onclick = () => navigator.share({
+    files: [file],
+    title: 'I reached ' + goal.name + '!',
+    text: 'I climbed ' + fmt(goal.height) + ' m, one walk at a time. #EveryMoveCounts',
+  }).catch(() => {});
+  $('summit-status').textContent = (isVideo ? 'Your summit video is ready.' : 'Video recording is not available in this browser, so here is a summit picture instead.')
+    + (canShare ? ' Share it or download it.' : ' Download it and share it from your phone.');
+  button.disabled = false;
+});
+
+renderAll();</script></body></html>
