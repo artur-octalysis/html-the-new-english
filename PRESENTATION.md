@@ -8,9 +8,10 @@
 5. Twelve-minute pair practice.
 6. Real conflict exercise.
 7. Branch, diff, review and merge visuals.
-8. Deployment.
-9. Activity table / database explanation.
-10. Share prototypes.
+8. Deployment: local files, shared source, and published releases; frontend vs backend deployments.
+9. Architecture: browser, API, database, permissions, secrets, and failure handling.
+10. Activity table: live memory demo vs durable records, schema, and reads/writes.
+11. Share prototypes.
 
 Allow 45–60 minutes, including 12 minutes of pair practice and 5 minutes of sharing. Complete GitHub sign-in before the session if possible.
 
