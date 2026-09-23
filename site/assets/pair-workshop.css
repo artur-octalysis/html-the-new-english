@@ -76,7 +76,7 @@
 .git-timeline li strong{font-weight:600;display:block}
 .git-timeline .is-complete::before,.git-timeline .is-current::before{background:#005cc2}
 .git-timeline .is-complete>span{background:#005cc2;border-color:#005cc2;color:white}
-.git-timeline .is-current>span{border-color:#005cc2;background:white;color:#00428f;box-shadow:0 0 0 5px #a6e3ff66}
+.git-timeline .is-current>span{border-color:#005cc2;background:#005cc2;color:white;box-shadow:0 0 0 5px #a6e3ff66}
 .git-timeline .is-current{color:#00428f}
 .github-workflow-actions{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin:24px 0 8px}
 .deploy-route li{position:relative;padding-right:88px}
