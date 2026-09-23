@@ -63,7 +63,7 @@
 #why .content{width:100%;max-width:1080px}#why h2{max-width:930px}#why .lead{max-width:810px}.connected-project{max-width:830px;margin:28px 0}.scattered-formats{display:flex;gap:9px;flex-wrap:wrap}.scattered-formats span{font:12px ui-monospace,monospace;color:var(--muted);padding:10px 14px;border:1px dashed #b6cbe0;border-radius:8px;background:#ffffffbb}.project-connection{display:block;color:var(--blue);font-size:25px;line-height:1;padding:9px 24px}.shared-project{padding:22px 25px;border:1px solid #b4cfea;border-left:4px solid var(--blue);border-radius:12px;background:#ffffffed}.shared-project>span{font-size:10px;letter-spacing:.13em;font-weight:600;color:var(--blue)}.shared-project strong{display:block;font:600 22px/1.35 Poppins,sans-serif;margin:8px 0}.shared-project p{font-size:14px;color:var(--muted);margin:0}.team-value{display:grid;grid-template-columns:repeat(3,1fr);gap:25px;margin:30px 0;max-width:1030px}.team-value article{border-top:2px solid #b9d5ee;padding-top:15px}.team-value article>span{font-size:9px;letter-spacing:.1em;color:var(--blue);font-weight:600}.team-value h3{font:600 18px/1.35 Poppins,sans-serif;margin:10px 0}.team-value p{font-size:13px;line-height:1.65;color:var(--muted);margin:0}.why-takeaway{font-size:16px;font-weight:500;max-width:760px;margin:28px 0}@media(max-width:800px){.team-value{grid-template-columns:1fr;gap:20px}#why h2{font-size:38px}.shared-project strong{font-size:20px}}
 
 /* Opacity follows scroll position, in either direction. Desktop windows remain steady. */
-.fold .content>:not(#desktop){opacity:var(--fold-opacity,1)}
+.fold .content>:not(#desktop){opacity:var(--fold-opacity,1);filter:blur(var(--fold-blur,0px))}
 @media(prefers-reduced-motion:reduce){.fold .content>:not(#desktop){opacity:1!important}}
 @media print{.fold .content>:not(#desktop){opacity:1!important}}
 
@@ -98,3 +98,16 @@
 #architecture .eyebrow{margin-bottom:16px}
 .system-map{padding:12px}
 .system-map>svg{height:clamp(300px,calc(100svh - 300px),570px)}
+
+/* Scroll creates a dissolve in place, with a quiet interval between slides. */
+.focus-scroll .fold{display:block;min-height:0;padding:0!important}
+.fold-stage{width:100%}
+.focus-scroll .fold-stage{position:sticky;top:var(--stage-top,0px);min-height:100svh;padding:140px 4vw 80px;display:flex;align-items:center;transform:translateY(var(--reveal-offset,0px))}
+.focus-scroll #architecture .fold-stage{padding-top:110px;padding-bottom:40px}
+.focus-scroll .fold:last-child{padding-bottom:0!important}
+.focus-scroll .fold:last-child .content>*{opacity:1;filter:none}
+@media(max-width:800px){.focus-scroll .fold-stage{padding:110px 5vw 55px}}
+@media(prefers-reduced-motion:reduce){.fold .content>:not(#desktop){filter:none!important}.fold-stage{transform:none!important}}
+@media print{.focus-scroll .fold{padding:20px!important}.focus-scroll .fold-stage{position:static;min-height:0;padding:0;transform:none}.fold .content>:not(#desktop){filter:none!important}}
+
+.git-timeline{isolation:isolate}.git-timeline li>span{z-index:1}

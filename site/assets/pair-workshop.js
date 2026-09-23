@@ -125,7 +125,28 @@ function positionWindow(el,x,y){const area=$('desktop');el.style.left=Math.round
 for(const el of document.querySelectorAll('.desktop-window')){el.addEventListener('pointerdown',()=>raise(el));const bar=el.querySelector('.window-titlebar');let drag=null;bar.addEventListener('pointerdown',event=>{if(event.target.closest('button')||event.button!==0||innerWidth<=800)return;const rect=el.getBoundingClientRect(),area=$('desktop').getBoundingClientRect();drag={pointer:event.pointerId,x:event.clientX,y:event.clientY,left:rect.left-area.left,top:rect.top-area.top};bar.setPointerCapture(event.pointerId);el.classList.add('dragging');event.preventDefault();});bar.addEventListener('pointermove',event=>{if(!drag||drag.pointer!==event.pointerId)return;positionWindow(el,drag.left+event.clientX-drag.x,drag.top+event.clientY-drag.y);});const end=()=>{drag=null;el.classList.remove('dragging');};bar.addEventListener('pointerup',end);bar.addEventListener('pointercancel',end);bar.addEventListener('lostpointercapture',end);bar.addEventListener('keydown',event=>{if(event.target!==bar||!event.key.startsWith('Arrow')||innerWidth<=800)return;event.preventDefault();event.stopPropagation();const step=event.shiftKey?30:10;positionWindow(el,el.offsetLeft+(event.key==='ArrowRight'?step:event.key==='ArrowLeft'?-step:0),el.offsetTop+(event.key==='ArrowDown'?step:event.key==='ArrowUp'?-step:0));});}
 let current=-1;
 const reduceScrollMotion=matchMedia('(prefers-reduced-motion: reduce)');
-function updateFoldFades(){const height=innerHeight;for(const fold of folds){const rect=fold.getBoundingClientRect();const enter=Math.max(0,Math.min(1,(height*.85-rect.top)/(height*.65)));const leave=Math.max(0,Math.min(1,(rect.bottom-height*.12)/(height*.43)));const opacity=reduceScrollMotion.matches?1:Math.min(enter,leave);fold.style.setProperty('--fold-opacity',opacity.toFixed(3));}}
+// Each fold has a stationary reveal stage and a separate scroll interval.
+for(const fold of folds){const stage=document.createElement('div');stage.className='fold-stage';stage.append(fold.querySelector('.content'));fold.append(stage);}
+const smooth=value=>{const x=Math.max(0,Math.min(1,value));return x*x*(3-2*x);};
+function updateFoldFades(){
+ const height=innerHeight,reduced=reduceScrollMotion.matches;
+ document.documentElement.classList.toggle('focus-scroll',!reduced);
+ for(const fold of folds){
+  const stage=fold.querySelector('.fold-stage');
+  const stageHeight=stage.offsetHeight;
+  fold.style.height=reduced?'':(stageHeight+(fold===folds.at(-1)?0:height*.78))+'px';
+  const rect=fold.getBoundingClientRect();
+  const enter=smooth((height*.72-rect.top)/(height*.55));
+  const leave=smooth((rect.bottom-height*1.04)/(height*.48));
+  const opacity=reduced||fold===folds.at(-1)?1:Math.min(enter,leave);
+  fold.style.setProperty('--fold-opacity',opacity.toFixed(3));
+  fold.style.setProperty('--fold-blur',((1-opacity)*16).toFixed(2)+'px');
+  fold.style.setProperty('--stage-top',Math.min(0,height-stageHeight)+'px');
+  // Cancel the incoming slide's scroll movement while it resolves into focus.
+  fold.style.setProperty('--reveal-offset',(!reduced?-Math.max(0,rect.top):0)+'px');
+  stage.style.pointerEvents=opacity<.08?'none':'';
+ }
+}
 reduceScrollMotion.addEventListener('change',updateFoldFades);
 function track(){updateFoldFades();let index=0;for(let i=0;i<folds.length;i++)if(folds[i].getBoundingClientRect().top<innerHeight*.48)index=i;if(current===index)return;current=index;const fold=folds[index];$('chapter-count').textContent=String(index+1).padStart(2,'0')+' / '+folds.length;$('desktop').hidden=fold.id==='architecture';if(fold.id==='git'){selectGitHubView('flow');openWindow('github-window');}if(fold.id==='database'&&stage>=0){if(!previewIsDraft)openFile('workshop/live/index.html');else openWindow('browser-window');}if(innerWidth<=800){fold.querySelector('.content').append($('desktop'));}else if($('desktop').parentElement!==document.body)document.body.append($('desktop'));}
 let scrollFrame=0;window.addEventListener('scroll',()=>{if(!scrollFrame)scrollFrame=requestAnimationFrame(()=>{scrollFrame=0;track();});},{passive:true});window.addEventListener('resize',()=>{for(const el of document.querySelectorAll('.desktop-window')){el.style.left='';el.style.top='';el.style.right='';}current=-1;track();});
