@@ -38,7 +38,7 @@ Read this brief before editing. Make a branch named `pair/myrte-rob`. Keep the a
 - No secrets, external services, or real personal data.
 
 ## Handoff — complete before submitting
-- Motivation hypothesis:
-- What changed:
-- Known limitation:
-- Next step:
+- Motivation hypothesis: Busy returners come back when logging takes one tap and every entry shows visible progress (CD2 Development & Accomplishment), growth compared with their own past (CD4 Ownership & Possession), and reassurance that they are in step with people like them, not athletes (CD5 Social Influence & Relatedness).
+- What changed: Quick-log buttons (10/15/20/30 min); a 60-minute weekly goal with progress bar and milestone badges; feedback that names a small next step; "You vs. last week" and "Returners like you" comparison bars; Enter-to-log and visible keyboard focus.
+- Known limitation: Last week (35 min) and returner (45 min) figures are fixed fictional examples, and logged activities reset on page reload.
+- Next step: Test with returners whether peer comparison encourages or pressures them, and whether a 60-minute weekly goal feels achievable.
